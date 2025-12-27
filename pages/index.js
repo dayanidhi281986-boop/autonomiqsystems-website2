@@ -1,71 +1,66 @@
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-blue-900/20 to-black text-white">
-      <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-4 px-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <a href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
-            AutonomIQ Systems
-          </a>
-          <div className="hidden md:flex space-x-6">
-            <a href="#services" className="hover:text-blue-400">Services</a>
-            <a href="/contact" className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-xl font-bold">Free Assessment</a>
-          </div>
-        </div>
-      </nav>
-
-      <section className="pt-32 pb-32 px-6 max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center bg-green-500/20 border border-green-500/50 px-6 py-3 rounded-full mb-12 mx-auto">
-          <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-          <span className="text-lg font-medium">LIVE • 100% Autonomous AI</span>
-        </div>
-        
-        <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent mb-8">
-          AI-Only IT Services
+    <div style={{background:'linear-gradient(135deg, #0b0f1a 0%, #1e3a8a 100%)', minHeight:'100vh'}}>
+      {/* HERO */}
+      <section style={{padding:'100px 20px', textAlign:'center', color:'white'}}>
+        <h1 style={{fontSize:'4rem', color:'#93c5fd', marginBottom:'20px'}}>
+          AutonomIQ Systems Pvt. Ltd.
         </h1>
-        
-        <p className="text-2xl text-zinc-300 max-w-3xl mx-auto mb-12">
-          Fully autonomous consulting, operations & development. 
-          <span className="font-bold text-blue-400 block">No humans. India GST compliant.</span>
+        <h2 style={{fontSize:'2rem', marginBottom:'30px'}}>
+          AI-Only IT Consulting • AIOps • Development
+        </h2>
+        <p style={{fontSize:'1.3rem', maxWidth:'800px', margin:'0 auto 40px'}}>
+          No humans. No delays. Infinite scale. Enterprise IT powered by autonomous AI agents.
         </p>
-        
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
-          <a href="/contact" className="bg-blue-600 hover:bg-blue-700 px-12 py-6 text-xl font-bold rounded-xl">
-            🚀 Start Free Assessment
-          </a>
-          <a href="#services" className="border border-zinc-700 hover:bg-zinc-800 px-12 py-6 rounded-xl text-xl font-bold">
-            View Services
-          </a>
+        <div style={{display:'flex', gap:'20px', justifyContent:'center', flexWrap:'wrap'}}>
+          <button style={{padding:'20px 40px', background:'#1e40af', color:'white', border:'none', borderRadius:'10px', fontSize:'1.2rem'}}>
+            Start AI Consultation →
+          </button>
+          <button style={{padding:'20px 40px', background:'transparent', color:'#93c5fd', border:'2px solid #93c5fd', borderRadius:'10px'}}>
+            View Portfolio
+          </button>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="text-center p-8"><div className="text-4xl font-bold text-blue-400 mb-2">100%</div><div>Autonomous</div></div>
-          <div className="text-center p-8"><div className="text-4xl font-bold text-green-400 mb-2">₹25L</div><div>MRR Target</div></div>
-          <div className="text-center p-8"><div className="text-4xl font-bold text-red-400 mb-2">0 Humans</div><div>Operations</div></div>
-          <div className="text-center p-8"><div className="text-4xl font-bold text-yellow-400 mb-2">&lt;24h</div><div>Response</div></div>
-        </div>
+        <p style={{marginTop:'50px', fontSize:'1.1rem', opacity:0.9}}>
+          Dayanidhi Dondapati - Founder & AI Governor
+        </p>
       </section>
 
-      <section id="services" className="py-24 px-6 bg-zinc-900/50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Enterprise AI Services
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-zinc-800/50 border border-zinc-700 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-blue-400 mb-4">AI Consulting</h3>
-              <div>• Cloud architecture</div><div>• ₹50k-2L/month</div>
-            </div>
-            <div className="bg-zinc-800/50 border border-zinc-700 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-green-400 mb-4">AIOps</h3>
-              <div>• 24x7 monitoring</div><div>• ₹1L+/month</div>
-            </div>
-            <div className="bg-zinc-800/50 border border-zinc-700 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold text-purple-400 mb-4">AI Development</h3>
-              <div>• Custom apps</div><div>• ₹3L-15L/projects</div>
-            </div>
+      {/* SERVICES PORTFOLIO */}
+      <section style={{padding:'100px 20px', background:'#0f172a'}}>
+        <h2 style={{textAlign:'center', color:'#93c5fd', fontSize:'3rem', marginBottom:'80px'}}>
+          AI-Powered Enterprise Services
+        </h2>
+        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(350px, 1fr))', gap:'40px', maxWidth:'1200px', margin:'0 auto'}}>
+          <div style={{background:'rgba(255,255,255,0.05)', padding:'40px', borderRadius:'20px', border:'1px solid #334155'}}>
+            <h3 style={{color:'#60a5fa', fontSize:'1.8rem', marginBottom:'20px'}}>AI IT Consulting</h3>
+            <ul style={{color:'white', lineHeight:'1.8'}}>
+              <li>Cloud architecture optimization</li>
+              <li>Digital transformation roadmaps</li>
+              <li>Cybersecurity strategy (AI-driven)</li>
+              <li>80% faster than human consultants[web:175]</li>
+            </ul>
+          </div>
+          <div style={{background:'rgba(255,255,255,0.05)', padding:'40px', borderRadius:'20px', border:'1px solid #334155'}}>
+            <h3 style={{color:'#60a5fa', fontSize:'1.8rem', marginBottom:'20px'}}>AIOps Operations</h3>
+            <ul style={{color:'white', lineHeight:'1.8'}}>
+              <li>Predictive incident resolution</li>
+              <li>Self-healing infrastructure</li>
+              <li>95% MTTR reduction[web:179]</li>
+              <li>Zero human intervention</li>
+            </ul>
+          </div>
+          <div style={{background:'rgba(255,255,255,0.05)', padding:'40px', borderRadius:'20px', border:'1px solid #334155'}}>
+            <h3 style={{color:'#60a5fa', fontSize:'1.8rem', marginBottom:'20px'}}>AI Development</h3>
+            <ul style={{color:'white', lineHeight:'1.8'}}>
+              <li>Autonomous code generation</li>
+              <li>Self-testing deployment</li>
+              <li>Continuous optimization</li>
+              <li>Enterprise-grade applications</li>
+            </ul>
           </div>
         </div>
       </section>
-    </div>
-  )
-}
+
+      {/* FUTURE VISION */}
+      <section style={{padding:'100px 20px', textAlign:'center', background:'linear-gradient(135deg, #1e293b 0%, #0b0f1a 100%)'}}>
+        <h2 style={{color
