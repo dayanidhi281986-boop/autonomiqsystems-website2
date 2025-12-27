@@ -30,7 +30,8 @@ export default function Contact() {
           }}>AutonomIQ Systems</a>
           <div>
             <a href="/" style={{color: '#d1d5db', marginRight: '2rem'}}>Home</a>
-            <a href="/#services" style={{color: '#d1d5db'}}>Services</a>
+            <a href="/services" style={{color: '#d1d5db'}}>Services</a>
+            <a href="/contact" style={{color: '#60a5fa', fontWeight: 'bold'}}>Contact</a>
           </div>
         </div>
       </nav>
@@ -50,7 +51,7 @@ export default function Contact() {
           textAlign: 'center',
           marginBottom: '3rem'
         }}>Free AI IT Assessment</h1>
-
+        
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -76,7 +77,7 @@ export default function Contact() {
               Trusted by enterprises | 98% uptime SLA
             </p>
           </div>
-
+          
           <div style={{
             background: 'rgba(31,41,55,0.5)',
             border: '1px solid #4b5563',
@@ -87,9 +88,13 @@ export default function Contact() {
                   method="POST" 
                   style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
               
+              {/* ENHANCED FORMSUBMIT FIELDS - PRODUCTION READY */}
               <input type="hidden" name="_subject" value="New AI Assessment Lead - AutonomIQ Systems" />
               <input type="hidden" name="_next" value="https://autonomiqsystems.com/#services" />
               <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_autoresponse" value="Thank you! Your AI IT assessment will be ready in 24 hours. - AutonomIQ Systems" />
+              <input type="hidden" name="_theme" value="dark" />
 
               <div>
                 <label style={{
@@ -111,7 +116,7 @@ export default function Contact() {
                          fontSize: '1rem'
                        }} />
               </div>
-
+              
               <div>
                 <label style={{
                   display: 'block',
@@ -133,7 +138,7 @@ export default function Contact() {
                          fontSize: '1rem'
                        }} />
               </div>
-
+              
               <div>
                 <label style={{
                   display: 'block',
@@ -154,7 +159,7 @@ export default function Contact() {
                          fontSize: '1rem'
                        }} />
               </div>
-
+              
               <div>
                 <label style={{
                   display: 'block',
@@ -188,7 +193,7 @@ export default function Contact() {
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}>
-                Get Free AI Assessment → 
+                🚀 Get Free AI Assessment Instantly
               </button>
             </form>
           </div>
@@ -207,7 +212,7 @@ export default function Contact() {
           <a href="/terms" style={{color: '#60a5fa'}}>Terms</a>
         </p>
         <p style={{color: '#6b7280', fontSize: '0.75rem', marginTop: '1rem'}}>
-          All services delivered by autonomous AI systems. No human consultants involved. India compliant.
+          All services delivered by autonomous AI systems. No human consultants involved. India compliant (DPDP Act 2023).
         </p>
       </footer>
     </div>
