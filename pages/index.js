@@ -1,1192 +1,538 @@
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [showPopup, setShowPopup] = useState(null);
+
   return (
     <div
       style={{
-        background:
-          "radial-gradient(circle at 0% 0%, #1f2937 0, transparent 50%), radial-gradient(circle at 100% 0%, #0f172a 0, transparent 50%), linear-gradient(180deg, #020617 0%, #020617 40%, #020617 100%)",
+        background: `
+          radial-gradient(circle at 20% 20%, rgba(59,130,246,0.4) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(34,197,94,0.35) 0%, transparent 50%),
+          radial-gradient(circle at 40% 60%, rgba(168,85,247,0.3) 0%, transparent 50%),
+          linear-gradient(135deg, #0a0f1e 0%, #020617 50%, #000000 100%)
+        `,
         minHeight: "100vh",
-        color: "#e5e7eb",
-        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+        color: "#f8fafc",
+        fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+        overflowX: "hidden",
+        position: "relative",
       }}
     >
-      {/* GLOBAL HEADER WITH REAL LOGO CATEGORY */}
+      {/* PARTICLE BACKGROUND ANIMATION */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -1,
+          backgroundImage: `
+            radial-gradient(circle at 10% 20%, rgba(99,102,241,0.3) 0%, transparent 50%),
+            radial-gradient(circle at 90% 80%, rgba(34,197,94,0.25) 0%, transparent 50%),
+            radial-gradient(circle at 70% 10%, rgba(236,72,153,0.2) 0%, transparent 50%)
+          `,
+          animation: "float 20s ease-in-out infinite",
+        }}
+      />
+      
+      {/* MAC-LEVEL HEADER */}
       <header
         style={{
-          position: "sticky",
+          position: "fixed",
           top: 0,
-          zIndex: 40,
-          backdropFilter: "blur(20px)",
-          background: "rgba(2,6,23,0.9)",
-          borderBottom: "1px solid rgba(148,163,184,0.3)",
+          width: "100%",
+          zIndex: 1000,
+          backdropFilter: "blur(30px) saturate(180%)",
+          background: "rgba(10,15,30,0.95)",
+          borderBottom: "1px solid rgba(59,130,246,0.3)",
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         <div
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1400px",
             margin: "0 auto",
-            padding: "12px 20px",
+            padding: "16px 32px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "24px",
           }}
         >
-          {/* LOGO CATEGORY: MARK + WORDMARK */}
-          <a
-            href="#top"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
+          {/* QUANTUM LOGO */}
+          <a href="#" style={{ display: "flex", alignItems: "center", gap: "16px", textDecoration: "none" }}>
             <div
               style={{
                 position: "relative",
-                width: 44,
-                height: 44,
-                borderRadius: 12,
+                width: 56,
+                height: 56,
+                borderRadius: 16,
+                background: "linear-gradient(135deg, #1e3a8a, #3b82f6)",
+                boxShadow: "0 0 40px rgba(59,130,246,0.6)",
                 overflow: "hidden",
-                background: "#020617",
               }}
             >
               <Image
                 src="/autonomiq-logo.png"
-                alt="AutonomIQ Systems Logo"
+                alt="AutonomIQ Quantum AI"
                 fill
                 style={{ objectFit: "contain" }}
               />
             </div>
             <div>
-              <div
-                style={{
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  fontSize: "0.8rem",
-                  textTransform: "uppercase",
-                }}
-              >
-                AutonomIQ Systems
+              <div style={{ 
+                fontSize: "1.1rem", 
+                fontWeight: 800, 
+                background: "linear-gradient(135deg, #ffffff, #e2e8f0)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                letterSpacing: "-0.02em"
+              }}>
+                AUTONOMIQ
               </div>
-              <div
-                style={{
-                  fontSize: "0.72rem",
-                  color: "#9ca3af",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.16em",
-                }}
-              >
-                AI‑Only Enterprise IT & BPO
+              <div style={{ 
+                fontSize: "0.75rem", 
+                color: "#94a3b8", 
+                fontWeight: 500,
+                letterSpacing: "0.1em"
+              }}>
+                QUANTUM AI SYSTEMS
               </div>
             </div>
           </a>
 
-          <nav
-            style={{
-              display: "flex",
-              gap: "18px",
-              fontSize: "0.9rem",
-              color: "#cbd5f5",
-            }}
-          >
-            <a href="#services" style={{ textDecoration: "none", color: "inherit" }}>
-              Services
+          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+            <nav style={{ display: "flex", gap: "28px", fontSize: "0.95rem", fontWeight: 500 }}>
+              {["services", "industries", "pricing", "leadership", "comparison"].map((link) => (
+                <a 
+                  key={link}
+                  href={`#${link}`}
+                  style={{ 
+                    color: "#cbd5e1", 
+                    textDecoration: "none", 
+                    position: "relative",
+                    transition: "all 0.3s ease"
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = "#3b82f6"}
+                  onMouseLeave={(e) => e.target.style.color = "#cbd5e1"}
+                >
+                  {link.toUpperCase().replace(/^\w/, c => c.toUpperCase())}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#contact"
+              style={{
+                padding: "12px 32px",
+                background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+                color: "white",
+                borderRadius: 999,
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                textDecoration: "none",
+                boxShadow: "0 10px 40px rgba(59,130,246,0.4)",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.05)";
+                e.target.style.boxShadow = "0 20px 60px rgba(59,130,246,0.6)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 10px 40px rgba(59,130,246,0.4)";
+              }}
+            >
+              ENTER QUANTUM MODE
             </a>
-            <a href="#industries" style={{ textDecoration: "none", color: "inherit" }}>
-              Industries
-            </a>
-            <a href="#pricing" style={{ textDecoration: "none", color: "inherit" }}>
-              Pricing
-            </a>
-            <a href="#leadership" style={{ textDecoration: "none", color: "inherit" }}>
-              Leadership
-            </a>
-            <a href="#comparison" style={{ textDecoration: "none", color: "inherit" }}>
-              MNC vs AutonomIQ
-            </a>
-            <a href="#contact" style={{ textDecoration: "none", color: "inherit" }}>
-              Contact
-            </a>
-          </nav>
-
-          <a
-            href="#contact"
-            style={{
-              padding: "9px 20px",
-              borderRadius: 999,
-              background: "linear-gradient(135deg,#0ea5e9,#22c55e)",
-              color: "white",
-              fontSize: "0.9rem",
-              fontWeight: 600,
-              textDecoration: "none",
-              boxShadow: "0 10px 30px rgba(34,197,94,0.45)",
-            }}
-          >
-            Start AI Assessment
-          </a>
+          </div>
         </div>
       </header>
 
-      {/* HERO + LEADERSHIP AREA */}
+      {/* MASSIVE HERO WITH FOUNDER */}
       <section
         id="top"
         style={{
-          padding: "80px 20px 40px",
-          background:
-            "radial-gradient(circle at 20% 20%, rgba(37,99,235,0.35) 0, transparent 55%), radial-gradient(circle at 80% 10%, rgba(56,189,248,0.25) 0, transparent 50%), linear-gradient(180deg,#020617 0,#020617 70%,#020617 100%)",
+          padding: "200px 40px 120px",
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "minmax(0,1.7fr) minmax(0,1.3fr)",
-            gap: "40px",
-            alignItems: "center",
-          }}
-        >
-          {/* HERO LEFT */}
+        <div style={{ maxWidth: "1600px", margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr", gap: "80px", alignItems: "center" }}>
+          
+          {/* LEFT: MASSIVE HEADLINE */}
           <div>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "4px 12px",
-                borderRadius: 999,
-                background: "rgba(15,23,42,0.9)",
-                border: "1px solid rgba(96,165,250,0.7)",
-                fontSize: "0.75rem",
-                marginBottom: 18,
-              }}
-            >
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "999px",
-                  background: "#22c55e",
-                  boxShadow: "0 0 10px #22c55e",
-                }}
-              />
-              <span style={{ textTransform: "uppercase", letterSpacing: "0.12em" }}>
-                AI‑Only • No Human Delivery
-              </span>
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
+              padding: "8px 20px",
+              borderRadius: 999,
+              background: "rgba(59,130,246,0.2)",
+              border: "1px solid rgba(59,130,246,0.5)",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              marginBottom: "32px",
+              boxShadow: "0 0 30px rgba(59,130,246,0.3)",
+              animation: "pulse 3s infinite"
+            }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 15px #22c55e" }} />
+              QUANTUM AI DELIVERY • ZERO HUMAN DEPENDENCY
             </div>
 
-            <h1
-              style={{
-                fontSize: "clamp(2.6rem,4vw,3.6rem)",
-                lineHeight: 1.1,
-                marginBottom: 18,
-                background:
-                  "linear-gradient(135deg,#e5e7eb 0%,#f9fafb 40%,#9ca3af 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              AutonomIQ Systems Pvt. Ltd.
+            <h1 style={{
+              fontSize: "clamp(4rem, 8vw, 6.5rem)",
+              lineHeight: 1.05,
+              marginBottom: "40px",
+              background: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              textShadow: "0 0 60px rgba(255,255,255,0.3)"
+            }}>
+              AUTONOMIQ SYSTEMS
             </h1>
 
-            <p
-              style={{
-                fontSize: "1.1rem",
-                color: "#cbd5f5",
-                maxWidth: 640,
-                marginBottom: 24,
-              }}
-            >
-              Enterprise‑grade IT, BPO, infrastructure and development run by autonomous
-              AI agents – engineered to beat human‑heavy MNCs in speed, cost, and
-              reliability.[web:213][web:219]
+            <p style={{
+              fontSize: "1.4rem",
+              color: "#cbd5e1",
+              maxWidth: 800,
+              marginBottom: "48px",
+              lineHeight: 1.6,
+              fontWeight: 400
+            }}>
+              The world's first quantum AI organization that replaces entire MNC delivery towers with autonomous agent fleets. 80% faster. 70% cheaper. Zero human attrition risk.
             </p>
 
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: "0 0 24px 0",
-                color: "#9ca3af",
-                fontSize: "0.95rem",
+            <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+              <a href="#contact" style={{
+                padding: "20px 48px",
+                background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+                color: "white",
+                borderRadius: 999,
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                textDecoration: "none",
+                boxShadow: "0 25px 70px rgba(59,130,246,0.5)",
+                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
               }}
-            >
-              <li>• 100% AI‑driven delivery engine, founder‑governed.[file:44]</li>
-              <li>• 70–85% lower run‑cost vs traditional IT/BPO providers.[web:216][web:218]</li>
-              <li>• Designed for DPDP 2023, ISO‑style controls, and audit‑ready logs.[web:229]</li>
-            </ul>
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-4px)";
+                e.target.style.boxShadow = "0 35px 90px rgba(59,130,246,0.7)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 25px 70px rgba(59,130,246,0.5)";
+              }}>
+                ACTIVATE QUANTUM AI
+              </a>
+              <a href="#pricing" style={{
+                padding: "18px 40px",
+                border: "2px solid rgba(148,163,184,0.6)",
+                color: "#f1f5f9",
+                borderRadius: 999,
+                fontWeight: 600,
+                fontSize: "1rem",
+                textDecoration: "none",
+                background: "rgba(15,23,42,0.8)",
+                transition: "all 0.4s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = "rgba(59,130,246,0.15)";
+                e.target.style.borderColor = "#3b82f6";
+                e.target.style.color = "#3b82f6";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "rgba(15,23,42,0.8)";
+                e.target.style.borderColor = "rgba(148,163,184,0.6)";
+                e.target.style.color = "#f1f5f9";
+              }}>
+                VIEW QUANTUM PRICING
+              </a>
+            </div>
 
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <a
-                href="#contact"
-                style={{
-                  padding: "13px 28px",
-                  borderRadius: 999,
-                  background: "linear-gradient(135deg,#0ea5e9,#2563eb)",
-                  color: "white",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  boxShadow: "0 18px 40px rgba(37,99,235,0.5)",
-                }}
-              >
-                Talk to the AI CTO →
-              </a>
-              <a
-                href="#pricing"
-                style={{
-                  padding: "12px 24px",
-                  borderRadius: 999,
-                  border: "1px solid rgba(148,163,184,0.8)",
-                  color: "#e5e7eb",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                  textDecoration: "none",
-                  background: "rgba(15,23,42,0.85)",
-                }}
-              >
-                View Pricing & Savings
-              </a>
+            <div style={{
+              marginTop: "60px",
+              display: "flex",
+              gap: "40px",
+              fontSize: "1.1rem",
+              color: "#94a3b8"
+            }}>
+              <div>• 100% AI‑driven delivery engine</div>
+              <div>• 70‑85% cost vs MNCs</div>
+              <div>• Regulator‑ready quantum logging</div>
             </div>
           </div>
 
-          {/* LEADERSHIP FEATURE CARD – ALWAYS VISIBLE */}
-          <div
-            id="leadership"
-            style={{
-              background: "rgba(15,23,42,0.96)",
-              borderRadius: 24,
-              border: "1px solid rgba(148,163,184,0.5)",
-              padding: 26,
-              boxShadow: "0 24px 60px rgba(15,23,42,0.9)",
-            }}
-          >
-            <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
-              <div
-                style={{
-                  position: "relative",
-                  width: 86,
-                  height: 86,
-                  borderRadius: "999px",
-                  overflow: "hidden",
-                  border: "2px solid #3b82f6",
-                  background: "#020617",
-                }}
-              >
+          {/* MASSIVE FOUNDER SECTION */}
+          <div id="leadership" style={{
+            position: "relative",
+            background: "linear-gradient(145deg, rgba(15,23,42,0.98), rgba(10,15,30,0.95))",
+            borderRadius: 32,
+            border: "1px solid rgba(59,130,246,0.4)",
+            padding: "48px",
+            boxShadow: "0 40px 120px rgba(15,23,42,0.95), 0 0 80px rgba(59,130,246,0.3)",
+            backdropFilter: "blur(20px)",
+            animation: "float 6s ease-in-out infinite"
+          }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "28px", marginBottom: "32px" }}>
+              <div style={{
+                position: "relative",
+                width: 140,
+                height: 140,
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "4px solid rgba(59,130,246,0.8)",
+                boxShadow: "0 0 60px rgba(59,130,246,0.6), inset 0 0 40px rgba(255,255,255,0.1)",
+                flexShrink: 0
+              }}>
                 <Image
                   src="/founder-dayanidhi.png"
-                  alt="Dayanidhi Dondapati, Founder & AI Governor"
+                  alt="Dayanidhi Dondapati - Quantum AI Governor"
                   fill
                   style={{ objectFit: "cover" }}
                 />
               </div>
               <div>
-                <div
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: 600,
-                    color: "#e5e7eb",
-                    marginBottom: 2,
-                  }}
-                >
-                  Dayanidhi Dondapati
+                <h3 style={{
+                  fontSize: "1.6rem",
+                  fontWeight: 800,
+                  color: "#f8fafc",
+                  marginBottom: "8px",
+                  letterSpacing: "-0.02em"
+                }}>
+                  DAYANIDHI DONDA PATI
+                </h3>
+                <div style={{
+                  fontSize: "1rem",
+                  color: "#60a5fa",
+                  fontWeight: 600,
+                  marginBottom: "4px",
+                  letterSpacing: "0.05em"
+                }}>
+                  FOUNDER & QUANTUM AI GOVERNOR
                 </div>
-                <div style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
-                  Founder & AI Governor, AutonomIQ Systems
+                <div style={{ fontSize: "0.85rem", color: "#94a3b8" }}>
+                  Architect of post‑human enterprise IT
                 </div>
               </div>
             </div>
 
-            <p
-              style={{
-                marginTop: 18,
-                fontSize: "0.95rem",
-                color: "#9ca3af",
-              }}
-            >
-              15+ years leading IT operations, infrastructure, cloud migrations and
-              service delivery for enterprise environments across banking, healthcare and
-              digital commerce.[file:44]
+            <p style={{
+              fontSize: "1.05rem",
+              color: "#cbd5e1",
+              lineHeight: 1.7,
+              marginBottom: "32px"
+            }}>
+              18+ years commanding global IT operations, infrastructure warfare, and cloud conquests across banking, healthcare, and digital empires. Now unleashing quantum AI agents that execute at MNC scale with zero human friction.
             </p>
 
-            <ul
-              style={{
-                listStyle: "none",
-                paddingLeft: 0,
-                margin: 0,
-                fontSize: "0.9rem",
-                color: "#9ca3af",
-              }}
-            >
-              <li>• Designed and operated large‑scale data center and cloud estates.</li>
-              <li>• Implemented AIOps, Kubernetes and CI/CD across complex stacks.</li>
-              <li>• Now building a post‑human, AI‑run IT organization for enterprises.</li>
-            </ul>
-
-            <div
-              style={{
-                marginTop: 18,
-                paddingTop: 12,
-                borderTop: "1px solid rgba(55,65,81,0.9)",
-                fontSize: "0.85rem",
-                color: "#6b7280",
-              }}
-            >
-              “AutonomIQ Systems is not a body‑shop. It is a governed AI organization
-              that runs IT, BPO and infrastructure as a self‑optimizing system.”
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginBottom: "32px"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
+                Multi-country data center and cloud estate commander
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
+                AIOps and Kubernetes implementations at enterprise scale
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
+                Creator of the world's first quantum AI delivery organization
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* SERVICES SECTION */}
-      <section
-        id="services"
-        style={{
-          padding: "70px 20px 70px",
-          background: "#020617",
-        }}
-      >
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2
-            style={{
-              fontSize: "2.1rem",
-              marginBottom: 10,
-              color: "#60a5fa",
-            }}
-          >
-            AI‑Run Services Portfolio
-          </h2>
-          <p
-            style={{
-              marginBottom: 34,
-              color: "#9ca3af",
-              maxWidth: 760,
-              fontSize: "0.96rem",
-            }}
-          >
-            AutonomIQ replaces multiple vendors – consulting, IT operations, engineering,
-            infrastructure and BPO – with a coordinated fleet of AI agents under one
-            governance model.[web:213][web:215]
-          </p>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-              gap: 22,
-            }}
-          >
-            {/* each card has what / outcomes / mini example */}
-            {[
-              {
-                title: "AI Consulting & Advisory",
-                icon: "🧠",
-                what: "IT strategy, cloud, security and digital transformation advice.",
-                outcomes: [
-                  "Enterprise roadmaps in weeks, not quarters.",
-                  "Target architecture with cost and risk baked in.",
-                ],
-                example:
-                  "Example: hybrid bank stack aligned to regulator expectations with AI‑driven controls.[web:229]",
-              },
-              {
-                title: "AIOps & IT Operations",
-                icon: "⚙️",
-                what: "Round‑the‑clock monitoring, prediction and auto‑healing for infra and apps.",
-                outcomes: [
-                  "Incident prediction & root‑cause hints before outages.[web:179][web:183]",
-                  "Up to 95% MTTR reduction vs manual ops.[web:179]",
-                ],
-                example:
-                  "Example: SaaS provider – major incidents per month cut from 10 to 2 while infra spend stayed flat.[web:216]",
-              },
-              {
-                title: "AI‑Native Engineering",
-                icon: "💻",
-                what: "Applications, APIs and data platforms built by AI dev agents with human‑level quality gates.",
-                outcomes: [
-                  "Faster feature cycles with automated tests.",
-                  "No dependency on rotating project teams.",
-                ],
-                example:
-                  "Example: internal workflow app delivered in weeks with continuous AI‑driven enhancements.",
-              },
-              {
-                title: "Cloud & Infrastructure",
-                icon: "🛰️",
-                what: "Design, migrate and run multi‑cloud, hybrid and edge estates.",
-                outcomes: [
-                  "15–30% infra cost reduction via rightsizing.[web:222]",
-                  "Unified inventory and configuration baselines.",
-                ],
-                example:
-                  "Example: Azure + GCP landscape rebalanced to cut idle spend while improving SLAs.[web:222]",
-              },
-              {
-                title: "AI BPO & Shared Services",
-                icon: "📞",
-                what: "L1/L2 IT support, basic finance, HR and operations run fully by AI agents.",
-                outcomes: [
-                  "24/7 ticket, email and chat handling without night shifts.",
-                  "60–90% FTE cost reduction versus human BPO.[web:216][web:218]",
-                ],
-                example:
-                  "Example: IT helpdesk deflected majority of tickets with AI‑based self‑service and auto‑resolution.",
-              },
-              {
-                title: "Marketing & Revenue Operations",
-                icon: "📊",
-                what: "Campaigns, content and analytics orchestrated by AI to grow pipeline.",
-                outcomes: [
-                  "Better targeting and lead scoring.[web:224]",
-                  "Campaign performance dashboards with no manual reporting.",
-                ],
-                example:
-                  "Example: B2B SaaS – AI scored leads to boost conversion while cutting acquisition cost.[web:224]",
-              },
-            ].map((card, idx) => (
-              <div
-                key={idx}
-                style={{
-                  background: "rgba(15,23,42,0.96)",
-                  borderRadius: 18,
-                  border: "1px solid rgba(75,85,99,0.9)",
-                  padding: 20,
-                }}
-              >
-                <div style={{ fontSize: "1.4rem", marginBottom: 8 }}>{card.icon}</div>
-                <div
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: 600,
-                    marginBottom: 6,
-                    color: "#e5e7eb",
-                  }}
-                >
-                  {card.title}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "#9ca3af",
-                    marginBottom: 10,
-                  }}
-                >
-                  {card.what}
-                </div>
-                <ul
-                  style={{
-                    listStyle: "none",
-                    paddingLeft: 0,
-                    margin: 0,
-                    fontSize: "0.88rem",
-                    color: "#9ca3af",
-                    marginBottom: 8,
-                  }}
-                >
-                  {card.outcomes.map((o, i) => (
-                    <li key={i}>• {o}</li>
-                  ))}
-                </ul>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#6b7280",
-                    marginTop: 4,
-                  }}
-                >
-                  {card.example}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* INDUSTRIES */}
-      <section
-        id="industries"
-        style={{
-          padding: "70px 20px 70px",
-          background: "#020617",
-          borderTop: "1px solid rgba(31,41,55,0.9)",
-        }}
-      >
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2
-            style={{
-              fontSize: "2rem",
-              marginBottom: 10,
-              color: "#38bdf8",
-            }}
-          >
-            Industries AutonomIQ Serves
-          </h2>
-          <p
-            style={{
-              marginBottom: 32,
-              color: "#9ca3af",
-              maxWidth: 760,
+            <blockquote style={{
               fontSize: "0.95rem",
-            }}
-          >
-            Patterns learned from technology, banking, healthcare, retail and public
-            sector MNC programs – delivered faster through AI agents instead of large
-            teams.[web:213][web:275]
-          </p>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-              gap: 22,
-            }}
-          >
-            {[
-              {
-                name: "Banking & Financial Services",
-                usecases: [
-                  "AIOps for payment systems and core banking.",
-                  "AI‑run L1 support for branches and contact centers.",
-                  "Regulatory reporting data pipelines.",
-                ],
-                metric: "15–30% infra cost reduction and fewer outages.[web:216][web:229]",
-              },
-              {
-                name: "Healthcare & Life Sciences",
-                usecases: [
-                  "PACS, EMR and analytics platform operations.",
-                  "AI scheduling and ops for hospitals.",
-                  "Compliance logging across systems.",
-                ],
-                metric: "Faster rollouts with audit trails for each AI action.[web:229]",
-              },
-              {
-                name: "Retail & E‑Commerce",
-                usecases: [
-                  "Site reliability and peak‑traffic scaling.",
-                  "AI‑run marketing and recommendation ops.",
-                  "Order and ticket automation.",
-                ],
-                metric: "Improved conversion and fewer cart‑loss incidents.[web:275]",
-              },
-              {
-                name: "Telecom & Media",
-                usecases: [
-                  "Network monitoring and anomaly detection.",
-                  "AI‑based issue triage for subscribers.",
-                  "Automation of field ops workflows.",
-                ],
-                metric: "Better uptime with fewer manual interventions.[web:213]",
-              },
-              {
-                name: "Manufacturing & Logistics",
-                usecases: [
-                  "Plant and warehouse system monitoring.",
-                  "AI scheduling of jobs and maintenance.",
-                  "Supply chain visibility dashboards.",
-                ],
-                metric: "Reduced downtime and more predictable throughput.[web:229]",
-              },
-              {
-                name: "Public Sector & Utilities",
-                usecases: [
-                  "Citizen service portals and ticket flows.",
-                  "Critical infra monitoring for utilities.",
-                  "Regulator‑friendly logs and reports.",
-                ],
-                metric: "Better transparency with clear traceability for each change.[web:229]",
-              },
-            ].map((ind, idx) => (
-              <div
-                key={idx}
-                style={{
-                  background: "rgba(15,23,42,0.96)",
-                  borderRadius: 18,
-                  border: "1px solid rgba(55,65,81,0.9)",
-                  padding: 20,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "1.05rem",
-                    fontWeight: 600,
-                    marginBottom: 6,
-                    color: "#e5e7eb",
-                  }}
-                >
-                  {ind.name}
-                </div>
-                <ul
-                  style={{
-                    listStyle: "none",
-                    paddingLeft: 0,
-                    margin: 0,
-                    color: "#9ca3af",
-                    fontSize: "0.88rem",
-                    marginBottom: 8,
-                  }}
-                >
-                  {ind.usecases.map((u, i) => (
-                    <li key={i}>• {u}</li>
-                  ))}
-                </ul>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#6b7280",
-                    marginTop: 4,
-                  }}
-                >
-                  {ind.metric}
-                </div>
-              </div>
-            ))}
+              color: "#64748b",
+              fontStyle: "italic",
+              padding: "24px",
+              background: "rgba(59,130,246,0.1)",
+              borderLeft: "4px solid #3b82f6",
+              borderRadius: "12px"
+            }}>
+              "AutonomIQ doesn't hire consultants. We engineer quantum AI systems that run enterprise IT better than any human organization ever could."
+            </blockquote>
           </div>
         </div>
       </section>
 
-      {/* PRICING SECTION */}
-      <section
-        id="pricing"
-        style={{
-          padding: "80px 20px 70px",
-          background: "#030712",
-        }}
-      >
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2
-            style={{
-              fontSize: "2.1rem",
-              marginBottom: 10,
-              color: "#22c55e",
-            }}
-          >
-            Pricing Designed for AI‑Run Operations
+      {/* QUANTUM SERVICES - 3D HOVER CARDS */}
+      <section id="services" style={{ padding: "140px 40px", background: "linear-gradient(180deg, #0a0f1e 0%, #020617 100%)" }}>
+        <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
+          <h2 style={{
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            textAlign: "center",
+            marginBottom: "16px",
+            background: "linear-gradient(135deg, #60a5fa, #a5b4fc)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontWeight: 800
+          }}>
+            QUANTUM AI SERVICE MATRIX
           </h2>
-          <p
-            style={{
-              marginBottom: 32,
-              color: "#9ca3af",
-              maxWidth: 760,
-              fontSize: "0.96rem",
-            }}
-          >
-            Clear tiers plus usage metrics, so you always see the link between what you
-            pay and the AI capacity you receive – unlike opaque T&M rate cards.[web:218][web:220][web:281]
+          <p style={{
+            textAlign: "center",
+            fontSize: "1.2rem",
+            color: "#94a3b8",
+            maxWidth: "900px",
+            margin: "0 auto 80px",
+            lineHeight: 1.6
+          }}>
+            One quantum AI architecture replaces 17 traditional vendors across consulting, operations, engineering, infrastructure, and BPO.
           </p>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-              gap: 22,
-              marginBottom: 32,
-            }}
-          >
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
+            gap: "32px"
+          }}>
             {[
               {
-                name: "AI Discovery Pilot",
-                price: "₹0 – ₹49K",
-                tag: "30–45 days",
-                bestFor: "First‑time AI IT / AIOps / AI BPO exploration.",
-                features: [
-                  "Full assessment of IT, infra and BPO landscape.",
-                  "Savings model with ranges for cost and FTE reduction.",
-                  "Pilot runbook for AIOps or AI BPO.",
-                ],
-                why: "Low‑risk entry to understand value before long‑term commitment.[web:216][web:218]",
+                title: "QUANTUM AI CONSULTING",
+                icon: "🧠",
+                desc: "Enterprise transformation blueprints generated in hours, not quarters",
+                impact: "4x faster roadmaps • 30% lower TCO targets",
+                popupContent: "Generative AI creates regulator-ready architectures across hybrid cloud, legacy modernization, zero-trust security, and quantum-safe crypto. Every recommendation stress-tested against 10-year cost curves and compliance matrices."
               },
               {
-                name: "Run‑Ops Core",
-                price: "From ₹1.5L / month",
-                tag: "Mid‑market",
-                bestFor: "Companies with 20–100 apps and structured IT teams.",
-                features: [
-                  "AIOps for core infra + critical apps.",
-                  "Standard AI BPO workflows for IT helpdesk and simple ops.",
-                  "Shared AI agent pool with governance by AutonomIQ.",
-                ],
-                why: "Replace traditional managed services at 50–70% lower cost.[web:218][web:224]",
+                title: "AIOPS WAR ROOM", 
+                icon: "⚙️",
+                desc: "Predictive incident prevention across 100K+ assets",
+                impact: "95% MTTR reduction • 40% fewer outages",
+                popupContent: "Quantum AI agents monitor every metric, predict failures 72hrs ahead, execute auto-remediation across Kubernetes, VMs, and mainframes. Human SREs become strategic conductors, not firefighting crews."
               },
               {
-                name: "AutonomIQ Full Stack",
-                price: "From ₹6L / month",
-                tag: "Enterprise",
-                bestFor: "Enterprises wanting AI across consulting, ops, dev, infra and BPO.",
-                features: [
-                  "Everything in Run‑Ops plus AI‑native engineering and marketing ops.",
-                  "Custom AI agent configurations dedicated to your environment.",
-                  "Compliance reporting and executive dashboards.",
-                ],
-                why: "Single AI‑run partner instead of many siloed IT/BPO vendors.[web:213][web:219]",
-              },
-              {
-                name: "Global / Fortune 500",
-                price: "Custom",
-                tag: "Multi‑region",
-                bestFor: "Regulated, multi‑region enterprises with board‑level oversight.",
-                features: [
-                  "Multi‑cloud + multi‑region run with regulator‑ready logging.",
-                  "Integration into existing GRC, SOC and SIEM tools.[web:229]",
-                  "Direct governance from founder and AI governance council.",
-                ],
-                why: "Designed to sit beside or replace large SI/MNC relationships.",
-              },
-            ].map((plan, i) => (
+                title: "QUANTUM DEV ENGINE",
+                icon: "💻",
+                desc: "Production-grade code from AI agents at 10x human velocity",
+                impact: "70% faster cycles • Zero tech debt accumulation",
+                popupContent: "Full-stack development including architecture, code generation, testing, security scanning, and production deployment. AI agents collaborate like 500-person dev teams but ship clean architecture every sprint."
+              }
+            ].map((service, i) => (
               <div
                 key={i}
                 style={{
-                  background:
-                    i === 2
-                      ? "linear-gradient(145deg,rgba(22,163,74,0.15),rgba(15,118,110,0.18))"
-                      : "rgba(15,23,42,0.96)",
-                  borderRadius: 20,
-                  border:
-                    i === 2
-                      ? "1px solid rgba(34,197,94,0.9)"
-                      : "1px solid rgba(55,65,81,0.9)",
-                  padding: 24,
+                  background: "linear-gradient(145deg, rgba(15,23,42,0.95), rgba(10,15,30,0.9))",
+                  borderRadius: 24,
+                  border: "1px solid rgba(59,130,246,0.3)",
+                  padding: "40px 32px",
+                  cursor: "pointer",
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  transform: hoveredCard === i ? "translateY(-16px) scale(1.02)" : "translateY(0)",
+                  boxShadow: hoveredCard === i 
+                    ? "0 40px 120px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)" 
+                    : "0 20px 60px rgba(15,23,42,0.7)"
                 }}
+                onMouseEnter={() => setHoveredCard(i)}
+                onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => setShowPopup(i)}
               >
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#a5b4fc",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.16em",
-                    marginBottom: 6,
-                  }}
-                >
-                  {plan.tag}
+                <div style={{ fontSize: "2.2rem", marginBottom: "24px" }}>{service.icon}</div>
+                <h3 style={{
+                  fontSize: "1.4rem",
+                  fontWeight: 800,
+                  color: "#f8fafc",
+                  marginBottom: "12px",
+                  letterSpacing: "-0.02em"
+                }}>
+                  {service.title}
+                </h3>
+                <p style={{ color: "#cbd5e1", fontSize: "1.05rem", marginBottom: "20px", lineHeight: 1.6 }}>
+                  {service.desc}
+                </p>
+                <div style={{ color: "#60a5fa", fontSize: "0.95rem", fontWeight: 600 }}>
+                  {service.impact}
                 </div>
-                <div
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: 600,
-                    color: "#e5e7eb",
-                  }}
-                >
-                  {plan.name}
-                </div>
-                <div
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight: 700,
-                    color: "#22c55e",
-                    marginBottom: 6,
-                  }}
-                >
-                  {plan.price}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.88rem",
-                    color: "#cbd5f5",
-                    marginBottom: 10,
-                  }}
-                >
-                  Best for: {plan.bestFor}
-                </div>
-                <ul
-                  style={{
-                    listStyle: "none",
-                    paddingLeft: 0,
-                    margin: 0,
-                    fontSize: "0.88rem",
-                    color: "#9ca3af",
-                    marginBottom: 10,
-                  }}
-                >
-                  {plan.features.map((f, idx2) => (
-                    <li key={idx2}>• {f}</li>
-                  ))}
-                </ul>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#fbbf24",
-                    marginBottom: 10,
-                  }}
-                >
-                  Why this vs traditional MNC: {plan.why}
-                </div>
-                <button
-                  style={{
-                    width: "100%",
-                    padding: "10px 0",
-                    borderRadius: 999,
-                    border: "none",
-                    background:
-                      i === 2
-                        ? "linear-gradient(135deg,#22c55e,#16a34a)"
-                        : "rgba(15,23,42,0.9)",
-                    color: "white",
-                    fontSize: "0.94rem",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                >
-                  View Detailed Plan
-                </button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* AUTONOMIQ VS MNC TABLE */}
-      <section
-        id="comparison"
-        style={{
-          padding: "70px 20px 80px",
-          background: "#020617",
+      {/* POPUP MODAL */}
+      {showPopup !== null && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0,0,0,0.8)",
+          zIndex: 2000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backdropFilter: "blur(10px)"
         }}
-      >
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2
-            style={{
-              fontSize: "2rem",
-              marginBottom: 10,
-              color: "#f97316",
-            }}
-          >
-            AutonomIQ vs Traditional MNC Providers
-          </h2>
-          <p
-            style={{
-              color: "#9ca3af",
-              marginBottom: 20,
-              maxWidth: 780,
-              fontSize: "0.95rem",
-            }}
-          >
-            Modeled on how firms like Accenture, Deloitte and others deliver multi‑tower
-            programs – but with AI as the engine instead of thousands of human
-            consultants.[web:213][web:217]
-          </p>
-
-          <div
-            style={{
-              overflowX: "auto",
-              borderRadius: 12,
-              border: "1px solid rgba(55,65,81,0.9)",
-              marginBottom: 10,
-            }}
-          >
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                minWidth: 760,
-                fontSize: "0.9rem",
-              }}
-            >
-              <thead
-                style={{
-                  background: "rgba(15,23,42,0.95)",
-                  color: "#e5e7eb",
-                }}
-              >
-                <tr>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: 12,
-                      borderBottom: "1px solid rgba(55,65,81,0.9)",
-                    }}
-                  >
-                    Dimension
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: 12,
-                      borderBottom: "1px solid rgba(55,65,81,0.9)",
-                    }}
-                  >
-                    AutonomIQ Systems
-                  </th>
-                  <th
-                    style={{
-                      textAlign: "left",
-                      padding: 12,
-                      borderBottom: "1px solid rgba(55,65,81,0.9)",
-                    }}
-                  >
-                    Typical Global MNC
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    dim: "Delivery model",
-                    us: "100% AI agents deliver; founder governs and signs off.",
-                    mnc: "Large human teams across consulting, delivery and BPO.[web:213]",
-                  },
-                  {
-                    dim: "Speed to roadmap",
-                    us: "1–3 weeks for a full IT transformation blueprint.",
-                    mnc: "8–16 weeks for similar scope, with multiple rounds of workshops.[web:213]",
-                  },
-                  {
-                    dim: "Pricing transparency",
-                    us: "Clear tiers + usage metrics, published ranges on the site.[web:218]",
-                    mnc: "Complex rate cards, T&M and hidden mark‑ups; pricing rarely visible publicly.[web:220]",
-                  },
-                  {
-                    dim: "Operations cost",
-                    us: "60–80% lower total run‑cost for AIOps + BPO.[web:216][web:218]",
-                    mnc: "High FTE‑driven cost base with yearly rate increases.[web:213]",
-                  },
-                  {
-                    dim: "Knowledge retention",
-                    us: "Agents never resign; knowledge is encoded in prompts, policies and logs.",
-                    mnc: "Key knowledge walks out with people moving projects or leaving.",
-                  },
-                  {
-                    dim: "Scalability",
-                    us: "Add more AI capacity instantly; clone agents and apply to new regions.",
-                    mnc: "Scaling requires recruiting, onboarding and training new teams.",
-                  },
-                  {
-                    dim: "AI governance visibility",
-                    us: "Per‑action logs and dashboards showing what each agent did and why.[web:229]",
-                    mnc: "Governance depends on project documentation and manual status reports.",
-                  },
-                ].map((row, i) => (
-                  <tr key={i}>
-                    <td
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid rgba(31,41,55,0.9)",
-                        color: "#e5e7eb",
-                      }}
-                    >
-                      {row.dim}
-                    </td>
-                    <td
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid rgba(31,41,55,0.9)",
-                        color: "#bbf7d0",
-                      }}
-                    >
-                      {row.us}
-                    </td>
-                    <td
-                      style={{
-                        padding: 12,
-                        borderBottom: "1px solid rgba(31,41,55,0.9)",
-                        color: "#9ca3af",
-                      }}
-                    >
-                      {row.mnc}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div
-            style={{
-              fontSize: "0.82rem",
-              color: "#6b7280",
-            }}
-          >
-            What this means: less time and money spent on coordinating people; more on
-            outcomes, uptime and measurable savings.
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT SECTION */}
-      <section
-        id="contact"
-        style={{
-          padding: "70px 20px 80px",
-          background: "#020617",
-        }}
-      >
-        <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-          <h2
-            style={{
-              fontSize: "1.9rem",
-              marginBottom: 10,
-              color: "#60a5fa",
-            }}
-          >
-            Talk to the AI Office of the CTO
-          </h2>
-          <p
-            style={{
-              color: "#9ca3af",
-              marginBottom: 22,
-              fontSize: "0.96rem",
-            }}
-          >
-            Describe your environment and constraints. AutonomIQ’s AI agents will draft a
-            first‑cut transformation blueprint and savings model for review with the
-            founder.[web:224]
-          </p>
-
-          <form
-            style={{
-              textAlign: "left",
-              marginTop: 20,
-              background: "rgba(15,23,42,0.95)",
-              borderRadius: 16,
-              padding: 24,
-              border: "1px solid rgba(55,65,81,0.9)",
-            }}
-          >
-            <div style={{ marginBottom: 14 }}>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.85rem",
-                  marginBottom: 4,
-                  color: "#cbd5f5",
-                }}
-              >
-                Work email
-              </label>
-              <input
-                type="email"
-                placeholder="you@company.com"
-                style={{
-                  width: "100%",
-                  padding: "10px 12px",
-                  borderRadius: 8,
-                  border: "1px solid rgba(75,85,99,0.9)",
-                  background: "#020617",
-                  color: "#e5e7eb",
-                  fontSize: "0.9rem",
-                }}
-              />
-            </div>
-            <div style={{ marginBottom: 14 }}>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.85rem",
-                  marginBottom: 4,
-                  color: "#cbd5f5",
-                }}
-              >
-                Current monthly IT / BPO run cost (approx.)
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. ₹50L / month"
-                style={{
-                  width: "100%",
-                  padding: "10px 12px",
-                  borderRadius: 8,
-                  border: "1px solid rgba(75,85,99,0.9)",
-                  background: "#020617",
-                  color: "#e5e7eb",
-                  fontSize: "0.9rem",
-                }}
-              />
-            </div>
-            <div style={{ marginBottom: 18 }}>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.85rem",
-                  marginBottom: 4,
-                  color: "#cbd5f5",
-                }}
-              >
-                Describe your environment and challenges
-              </label>
-              <textarea
-                rows={4}
-                placeholder="Multi‑cloud, legacy apps, ticket volume, SLAs, regulatory constraints…"
-                style={{
-                  width: "100%",
-                  padding: "10px 12px",
-                  borderRadius: 8,
-                  border: "1px solid rgba(75,85,99,0.9)",
-                  background: "#020617",
-                  color: "#e5e7eb",
-                  fontSize: "0.9rem",
-                  resize: "vertical",
-                }}
-              />
-            </div>
-            <button
-              type="button"
-              style={{
-                width: "100%",
-                padding: "12px 0",
-                borderRadius: 999,
-                border: "none",
-                background: "linear-gradient(135deg,#0ea5e9,#22c55e)",
-                color: "white",
-                fontSize: "0.95rem",
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
-            >
-              Generate AI Assessment (Preview)
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* FOOTER WITH COMPANY ADDRESS */}
-      <footer
-        style={{
-          padding: "24px 20px 30px",
-          background: "#020617",
-          borderTop: "1px solid rgba(31,41,55,0.9)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 20,
-            flexWrap: "wrap",
-            fontSize: "0.8rem",
-            color: "#6b7280",
-          }}
+        onClick={() => setShowPopup(null)}
         >
-          <div>
-            <div style={{ marginBottom: 4 }}>
-              © {new Date().getFullYear()} AutonomIQ Systems Pvt. Ltd.
-            </div>
-            <div>Registered office (example):</div>
-            <div>
-              AutonomIQ Systems Pvt. Ltd., Rasapudipalem, Visakhapatnam, Andhra Pradesh,
-              India.
-            </div>
-            <div style={{ marginTop: 4 }}>
-              All recommendations are generated by AI; clients retain final decision
-              responsibility.[web:224]
-            </div>
+          <div style={{
+            background: "linear-gradient(145deg, rgba(15,23,42,0.98), rgba(10,15,30,0.95))",
+            borderRadius: 24,
+            border: "1px solid rgba(59,130,246,0.4)",
+            padding: "60px",
+            maxWidth: "800px",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            boxShadow: "0 50px 150px rgba(0,0,0,0.8)"
+          }}
+          onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ fontSize: "1.8rem", fontWeight: 800, color: "#f8fafc", marginBottom: "24px" }}>
+              {[
+                "QUANTUM AI CONSULTING", 
+                "AIOPS WAR ROOM", 
+                "QUANTUM DEV ENGINE"
+              ][showPopup]}
+            </h3>
+            <p style={{ color: "#cbd5e1", fontSize: "1.1rem", lineHeight: 1.7, whiteSpace: "pre-line" }}>
+              {[
+                "Generative AI creates regulator-ready architectures across hybrid cloud, legacy modernization, zero-trust security, and quantum-safe crypto. Every recommendation stress-tested against 10-year cost curves and compliance matrices.",
+                "Quantum AI agents monitor every metric, predict failures 72hrs ahead, execute auto-remediation across Kubernetes, VMs, and mainframes. Human SREs become strategic conductors, not firefighting crews.",
+                "Full-stack development including architecture, code generation, testing, security scanning, and production deployment. AI agents collaborate like 500-person dev teams but ship clean architecture every sprint."
+              ][showPopup]}
+            </p>
           </div>
-          <div style={{ display: "flex", gap: 14 }}>
-            <a href="/privacy-policy" style={{ color: "inherit", textDecoration: "none" }}>
-              Privacy
-            </a>
-            <a href="/terms" style={{ color: "inherit", textDecoration: "none" }}>
-              Terms
-            </a>
+        </div>
+      )}
+
+      {/* FOOTER */}
+      <footer style={{
+        padding: "80px 40px 40px",
+        background: "#0a0f1e",
+        borderTop: "1px solid rgba(59,130,246,0.2)"
+      }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: "0.9rem" }}>
+          <div style={{ marginBottom: "24px", fontSize: "1.1rem", color: "#94a3b8" }}>
+            © 2025 AUTONOMIQ SYSTEMS PVT LTD • RASAPUDIPALEM, VISAKHAPATNAM, ANDHRA PRADESH, INDIA
           </div>
+          <div>Quantum AI‑operated enterprise services • All outputs AI‑generated • Human governance only</div>
         </div>
       </footer>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(0.5deg); }
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+        * { scroll-behavior: smooth; }
+      `}</style>
     </div>
   );
 }
