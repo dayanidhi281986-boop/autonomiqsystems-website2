@@ -45,6 +45,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ✅ AI CHAT BUTTON - FIXED POSITION */}
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        background: '#1e40af',
+        color: 'white',
+        padding: '15px 20px',
+        borderRadius: '50px',
+        cursor: 'pointer',
+        zIndex: 999,
+        boxShadow: '0 10px 30px rgba(30,64,175,0.4)',
+        fontWeight: 'bold',
+        fontSize: '14px'
+      }}>
+        💬 AI Chat → Start Project
+      </div>
     </div>
   )
 }
