@@ -44,7 +44,7 @@ export default function Contact() {
               
               <div>
                 <label style={{display:'block', color:'#d1d5db', marginBottom:'0.5rem', fontWeight:500}}>Challenge *</label>
-                <textarea name="challenge" rows="4" required style={{width:'100%', background:'#1f2937', border:'1px solid #4b5563', padding:'1rem', borderRadius:'0.75rem', color:'white', fontSize:'1rem', resize:'vertical'}} placeholder="Cloud costs? Incidents? Delivery speed?"></textarea>
+                <textarea name="challenge" rows="4" required style={{width:'100%', background:'#1f2937', border:'1px solid #4b5563', padding:'1rem', borderRadius:'0.75rem', color:'white', fontSize:'1rem', resize:'vertical'}} placeholder="Cloud costs? Incidents? Delivery?"></textarea>
               </div>
               
               <button type="submit" style={{background:'linear-gradient(45deg,#3b82f6,#8b5cf6)', color:'white', padding:'1.5rem', borderRadius:'0.75rem', fontSize:'1.25rem', fontWeight:'bold', border:'none', cursor:'pointer'}}>🚀 Get AI Report (60s)</button>
