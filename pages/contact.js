@@ -1,4 +1,3 @@
-// pages/contact.js - COMPLETE PRODUCTION CONTACT FORM
 export default function Contact() {
   return (
     <div style={{
