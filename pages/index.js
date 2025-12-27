@@ -4,535 +4,506 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [showPopup, setShowPopup] = useState(null);
+  const [securityLevel, setSecurityLevel] = useState(1);
+  const [quantumMatrix, setQuantumMatrix] = useState([]);
+
+  // Quantum matrix animation
+  useEffect(() => {
+    const matrix = [];
+    for (let i = 0; i < 50; i++) {
+      matrix.push({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        speed: 0.5 + Math.random() * 2,
+        opacity: Math.random() * 0.5 + 0.2
+      });
+    }
+    setQuantumMatrix(matrix);
+  }, []);
+
+  const quantumServices = [
+    {
+      title: "QUANTUM STRATEGY VAULT",
+      icon: "🧠",
+      subtitle: "AI‑Orchestrated Transformation",
+      metrics: "4x roadmap velocity • 35% TCO compression",
+      capabilities: [
+        "Hybrid/multi‑cloud reference architectures",
+        "Quantum‑safe migration blueprints", 
+        "Zero‑trust security hardening",
+        "10‑year cost curve optimization",
+        "Regulator‑ready compliance matrices"
+      ]
+    },
+    {
+      title: "AIOPS QUANTUM CORE", 
+      icon: "⚙️",
+      subtitle: "Predictive Operations Warfare",
+      metrics: "95% MTTR annihilation • 40% outage prevention",
+      capabilities: [
+        "72hr failure prediction across 100K+ assets",
+        "Auto‑remediation for K8s/VM/mainframe",
+        "Quantum anomaly detection ML",
+        "Capacity forecasting at petabyte scale",
+        "SRE‑to‑strategist human elevation"
+      ]
+    },
+    {
+      title: "QUANTUM CODE FORGE",
+      icon: "💻",
+      subtitle: "10x Velocity Development Engine",
+      metrics: "70% cycle compression • Zero tech debt",
+      capabilities: [
+        "Architecture + code + test generation",
+        "Security scanning + prod deployment",
+        "500‑dev‑team AI collaboration equivalent",
+        "Clean architecture every sprint",
+        "Infinite scalability without refactoring"
+      ]
+    },
+    {
+      title: "INFRA QUANTUM SHIELD",
+      icon: "🛡️",
+      subtitle: "Immutable Infrastructure Fortress",
+      metrics: "25% cost annihilation • 99.999% uptime",
+      capabilities: [
+        "AWS/Azure/GCP/Edge unified operations",
+        "Auto‑rightsizing + compliance scanning",
+        "Zero config drift enforcement",
+        "Petabyte‑scale capacity prediction",
+        "Quantum‑resistant encryption everywhere"
+      ]
+    }
+  ];
 
   return (
-    <div
-      style={{
-        background: `
-          radial-gradient(circle at 20% 20%, rgba(59,130,246,0.4) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(34,197,94,0.35) 0%, transparent 50%),
-          radial-gradient(circle at 40% 60%, rgba(168,85,247,0.3) 0%, transparent 50%),
-          linear-gradient(135deg, #0a0f1e 0%, #020617 50%, #000000 100%)
-        `,
-        minHeight: "100vh",
-        color: "#f8fafc",
-        fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
-        overflowX: "hidden",
-        position: "relative",
-      }}
-    >
-      {/* PARTICLE BACKGROUND ANIMATION */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-          backgroundImage: `
-            radial-gradient(circle at 10% 20%, rgba(99,102,241,0.3) 0%, transparent 50%),
-            radial-gradient(circle at 90% 80%, rgba(34,197,94,0.25) 0%, transparent 50%),
-            radial-gradient(circle at 70% 10%, rgba(236,72,153,0.2) 0%, transparent 50%)
-          `,
-          animation: "float 20s ease-in-out infinite",
-        }}
-      />
+    <div style={{
+      background: `
+        radial-gradient(circle at 15% 25%, rgba(88,28,135,0.6) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(16,185,129,0.5) 0%, transparent 40%),
+        radial-gradient(circle at 50% 10%, rgba(59,130,246,0.4) 0%, transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(236,72,153,0.3) 0%, transparent 40%),
+        linear-gradient(135deg, #0a0e1a 0%, #02060f 50%, #000105 100%)
+      `,
+      minHeight: "100vh",
+      color: "#f8fafc",
+      fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+      overflowX: "hidden",
+      position: "relative"
+    }}>
       
-      {/* MAC-LEVEL HEADER */}
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          zIndex: 1000,
-          backdropFilter: "blur(30px) saturate(180%)",
-          background: "rgba(10,15,30,0.95)",
-          borderBottom: "1px solid rgba(59,130,246,0.3)",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            padding: "16px 32px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* QUANTUM LOGO */}
-          <a href="#" style={{ display: "flex", alignItems: "center", gap: "16px", textDecoration: "none" }}>
-            <div
-              style={{
-                position: "relative",
-                width: 56,
-                height: 56,
-                borderRadius: 16,
-                background: "linear-gradient(135deg, #1e3a8a, #3b82f6)",
-                boxShadow: "0 0 40px rgba(59,130,246,0.6)",
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                src="/autonomiq-logo.png"
-                alt="AutonomIQ Quantum AI"
-                fill
-                style={{ objectFit: "contain" }}
+      {/* QUANTUM MATRIX OVERLAY */}
+      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1, pointerEvents: "none" }}>
+        {quantumMatrix.map((particle, i) => (
+          <div key={i} style={{
+            position: "absolute",
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: "2px",
+            height: "2px",
+            background: "#3b82f6",
+            borderRadius: "50%",
+            opacity: particle.opacity,
+            animation: `quantumFloat ${2 + particle.speed}s linear infinite`
+          }} />
+        ))}
+      </div>
+
+      {/* NASA‑LEVEL SECURITY HEADER */}
+      <header style={{
+        position: "fixed",
+        top: 0,
+        width: "100%",
+        zIndex: 10000,
+        backdropFilter: "blur(40px) saturate(200%) brightness(1.1)",
+        background: "rgba(5,10,20,0.97)",
+        borderBottom: "1px solid rgba(59,130,246,0.4)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.8)"
+      }}>
+        <div style={{ maxWidth: "1800px", margin: "0 auto", padding: "20px 48px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          
+          {/* PREMIUM QUANTUM LOGO SYSTEM */}
+          <a href="#" style={{ display: "flex", alignItems: "center", gap: "20px", textDecoration: "none" }}>
+            <div style={{
+              position: "relative",
+              width: 72,
+              height: 72,
+              borderRadius: 20,
+              background: "linear-gradient(145deg, #1e3a8a, #3b82f6, #1e40af)",
+              boxShadow: `
+                0 0 0 4px rgba(59,130,246,0.3),
+                0 0 60px rgba(59,130,246,0.6),
+                inset 0 0 40px rgba(255,255,255,0.1)
+              `,
+              overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.1)"
+            }}>
+              <Image 
+                src="/autonomiq-logo.png" 
+                alt="AutonomIQ Quantum Logo" 
+                fill 
+                style={{ objectFit: "contain", padding: "8px" }} 
               />
             </div>
             <div>
               <div style={{ 
-                fontSize: "1.1rem", 
-                fontWeight: 800, 
-                background: "linear-gradient(135deg, #ffffff, #e2e8f0)",
+                fontSize: "1.3rem", 
+                fontWeight: 900, 
+                background: "linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                letterSpacing: "-0.02em"
+                letterSpacing: "-0.03em",
+                textShadow: "0 0 30px rgba(255,255,255,0.5)"
               }}>
                 AUTONOMIQ
               </div>
               <div style={{ 
-                fontSize: "0.75rem", 
-                color: "#94a3b8", 
-                fontWeight: 500,
-                letterSpacing: "0.1em"
+                fontSize: "0.8rem", 
+                color: "#60a5fa", 
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase"
               }}>
-                QUANTUM AI SYSTEMS
+                QUANTUM AI ENTERPRISE
               </div>
             </div>
           </a>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-            <nav style={{ display: "flex", gap: "28px", fontSize: "0.95rem", fontWeight: 500 }}>
-              {["services", "industries", "pricing", "leadership", "comparison"].map((link) => (
+          {/* SECURITY LEVEL INDICATOR */}
+          <div style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: "16px",
+            color: "#94a3b8",
+            fontSize: "0.85rem",
+            fontWeight: 600
+          }}>
+            <div style={{
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              background: securityLevel >= 3 ? "#22c55e" : "#f59e0b",
+              boxShadow: "0 0 20px currentColor",
+              animation: "securityPulse 2s infinite"
+            }} />
+            QUANTUM LEVEL {securityLevel}/5
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
+            <nav style={{ display: "flex", gap: "36px", fontSize: "1rem", fontWeight: 600 }}>
+              {["services", "capabilities", "pricing", "security", "comparison"].map((link, i) => (
                 <a 
                   key={link}
                   href={`#${link}`}
                   style={{ 
                     color: "#cbd5e1", 
-                    textDecoration: "none", 
+                    textDecoration: "none",
                     position: "relative",
-                    transition: "all 0.3s ease"
+                    padding: "8px 0",
+                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
                   }}
-                  onMouseEnter={(e) => e.target.style.color = "#3b82f6"}
-                  onMouseLeave={(e) => e.target.style.color = "#cbd5e1"}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = "#3b82f6";
+                    e.target.style.textShadow = "0 0 20px rgba(59,130,246,0.8)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = "#cbd5e1";
+                    e.target.style.textShadow = "none";
+                  }}
                 >
-                  {link.toUpperCase().replace(/^\w/, c => c.toUpperCase())}
+                  {link.toUpperCase()}
                 </a>
               ))}
             </nav>
-            <a
-              href="#contact"
-              style={{
-                padding: "12px 32px",
-                background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-                color: "white",
-                borderRadius: 999,
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                textDecoration: "none",
-                boxShadow: "0 10px 40px rgba(59,130,246,0.4)",
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.05)";
-                e.target.style.boxShadow = "0 20px 60px rgba(59,130,246,0.6)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
-                e.target.style.boxShadow = "0 10px 40px rgba(59,130,246,0.4)";
-              }}
-            >
-              ENTER QUANTUM MODE
+            <a href="#contact" style={{
+              padding: "16px 40px",
+              background: "linear-gradient(135deg, #3b82f6, #1d4ed8, #1e3a8a)",
+              color: "white",
+              borderRadius: 999,
+              fontWeight: 700,
+              fontSize: "0.95rem",
+              textDecoration: "none",
+              boxShadow: "0 12px 50px rgba(59,130,246,0.5)",
+              border: "1px solid rgba(255,255,255,0.2)"
+            }}>
+              ENGAGE QUANTUM CORE
             </a>
           </div>
         </div>
       </header>
 
-      {/* MASSIVE HERO WITH FOUNDER */}
-      <section
-        id="top"
-        style={{
-          padding: "200px 40px 120px",
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ maxWidth: "1600px", margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr", gap: "80px", alignItems: "center" }}>
+      {/* HYPER‑ADVANCED HERO VAULT */}
+      <section id="top" style={{ 
+        padding: "280px 60px 160px", 
+        minHeight: "120vh", 
+        display: "flex", 
+        alignItems: "center",
+        position: "relative",
+        zIndex: 10
+      }}>
+        <div style={{ maxWidth: "2000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1.8fr 1fr", gap: "100px", alignItems: "center" }}>
           
-          {/* LEFT: MASSIVE HEADLINE */}
+          {/* LEFT: QUANTUM HERO */}
           <div>
             <div style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "12px",
-              padding: "8px 20px",
+              gap: "16px",
+              padding: "12px 28px",
               borderRadius: 999,
-              background: "rgba(59,130,246,0.2)",
-              border: "1px solid rgba(59,130,246,0.5)",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              marginBottom: "32px",
-              boxShadow: "0 0 30px rgba(59,130,246,0.3)",
-              animation: "pulse 3s infinite"
+              background: "linear-gradient(135deg, rgba(59,130,246,0.25), rgba(16,185,129,0.2))",
+              border: "2px solid rgba(59,130,246,0.6)",
+              fontSize: "1rem",
+              fontWeight: 800,
+              marginBottom: "48px",
+              boxShadow: "0 0 50px rgba(59,130,246,0.4)",
+              animation: "quantumPulse 3s infinite"
             }}>
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 15px #22c55e" }} />
-              QUANTUM AI DELIVERY • ZERO HUMAN DEPENDENCY
+              <div style={{ width: 14, height: 14, borderRadius: "50%", background: "linear-gradient(45deg, #22c55e, #3b82f6)", boxShadow: "0 0 20px currentColor" }} />
+              <span style={{ letterSpacing: "0.1em" }}>QUANTUM AI VAULT ACTIVATED</span>
+              <div style={{ width: 6, height: 24, background: "linear-gradient(to bottom, #22c55e, transparent)", borderRadius: "3px" }} />
             </div>
 
             <h1 style={{
-              fontSize: "clamp(4rem, 8vw, 6.5rem)",
-              lineHeight: 1.05,
-              marginBottom: "40px",
-              background: "linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%)",
+              fontSize: "clamp(5rem, 9vw, 8rem)",
+              lineHeight: 1.02,
+              marginBottom: "56px",
+              background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, #e2e8f0 70%, #cbd5e1 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              fontWeight: 800,
-              letterSpacing: "-0.04em",
-              textShadow: "0 0 60px rgba(255,255,255,0.3)"
+              fontWeight: 900,
+              letterSpacing: "-0.05em",
+              textShadow: `
+                0 0 80px rgba(255,255,255,0.4),
+                0 0 120px rgba(59,130,246,0.3)
+              `
             }}>
               AUTONOMIQ SYSTEMS
             </h1>
 
             <p style={{
-              fontSize: "1.4rem",
+              fontSize: "1.6rem",
               color: "#cbd5e1",
-              maxWidth: 800,
-              marginBottom: "48px",
+              maxWidth: 900,
+              marginBottom: "64px",
               lineHeight: 1.6,
-              fontWeight: 400
+              fontWeight: 400,
+              letterSpacing: "-0.01em"
             }}>
-              The world's first quantum AI organization that replaces entire MNC delivery towers with autonomous agent fleets. 80% faster. 70% cheaper. Zero human attrition risk.
+              The world's first <strong>quantum‑secured AI organization</strong> that obliterates traditional MNC delivery towers. 
+              Autonomous agent fleets execute at <strong>enterprise hyperscale</strong> with military‑grade precision.
             </p>
 
-            <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
               <a href="#contact" style={{
-                padding: "20px 48px",
-                background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+                padding: "24px 56px",
+                background: "linear-gradient(135deg, #3b82f6, #1d4ed8, #1e3a8a)",
                 color: "white",
+                borderRadius: 999,
+                fontWeight: 800,
+                fontSize: "1.1rem",
+                textDecoration: "none",
+                boxShadow: `
+                  0 25px 80px rgba(59,130,246,0.6),
+                  inset 0 1px 0 rgba(255,255,255,0.3)
+                `,
+                border: "1px solid rgba(255,255,255,0.2)",
+                position: "relative",
+                overflow: "hidden"
+              }}>
+                ENGAGE QUANTUM CORE →
+              </a>
+              <a href="#capabilities" style={{
+                padding: "22px 48px",
+                border: "2px solid rgba(59,130,246,0.6)",
+                color: "#f8fafc",
                 borderRadius: 999,
                 fontWeight: 700,
                 fontSize: "1.05rem",
                 textDecoration: "none",
-                boxShadow: "0 25px 70px rgba(59,130,246,0.5)",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-4px)";
-                e.target.style.boxShadow = "0 35px 90px rgba(59,130,246,0.7)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow = "0 25px 70px rgba(59,130,246,0.5)";
+                background: "rgba(59,130,246,0.15)",
+                backdropFilter: "blur(20px)"
               }}>
-                ACTIVATE QUANTUM AI
-              </a>
-              <a href="#pricing" style={{
-                padding: "18px 40px",
-                border: "2px solid rgba(148,163,184,0.6)",
-                color: "#f1f5f9",
-                borderRadius: 999,
-                fontWeight: 600,
-                fontSize: "1rem",
-                textDecoration: "none",
-                background: "rgba(15,23,42,0.8)",
-                transition: "all 0.4s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "rgba(59,130,246,0.15)";
-                e.target.style.borderColor = "#3b82f6";
-                e.target.style.color = "#3b82f6";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "rgba(15,23,42,0.8)";
-                e.target.style.borderColor = "rgba(148,163,184,0.6)";
-                e.target.style.color = "#f1f5f9";
-              }}>
-                VIEW QUANTUM PRICING
+                VIEW QUANTUM CAPABILITIES
               </a>
             </div>
 
+            {/* HYPER‑ADVANCED METRICS */}
             <div style={{
-              marginTop: "60px",
-              display: "flex",
+              marginTop: "80px",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
               gap: "40px",
-              fontSize: "1.1rem",
-              color: "#94a3b8"
+              fontSize: "1.2rem"
             }}>
-              <div>• 100% AI‑driven delivery engine</div>
-              <div>• 70‑85% cost vs MNCs</div>
-              <div>• Regulator‑ready quantum logging</div>
+              <div style={{ textAlign: "center", opacity: 0.9 }}>
+                <div style={{ fontSize: "2.5rem", fontWeight: 900, color: "#22c55e" }}>100%</div>
+                <div>AI‑Driven Delivery</div>
+              </div>
+              <div style={{ textAlign: "center", opacity: 0.9 }}>
+                <div style={{ fontSize: "2.5rem", fontWeight: 900, color: "#f59e0b" }}>70-85%</div>
+                <div>Cost vs MNCs</div>
+              </div>
+              <div style={{ textAlign: "center", opacity: 0.9 }}>
+                <div style={{ fontSize: "2.5rem", fontWeight: 900, color: "#ec4899" }}>99.999%</div>
+                <div>Uptime Quantum SLA</div>
+              </div>
             </div>
           </div>
 
-          {/* MASSIVE FOUNDER SECTION */}
+          {/* FOUNDER QUANTUM PORTRAIT */}
           <div id="leadership" style={{
             position: "relative",
-            background: "linear-gradient(145deg, rgba(15,23,42,0.98), rgba(10,15,30,0.95))",
-            borderRadius: 32,
-            border: "1px solid rgba(59,130,246,0.4)",
-            padding: "48px",
-            boxShadow: "0 40px 120px rgba(15,23,42,0.95), 0 0 80px rgba(59,130,246,0.3)",
-            backdropFilter: "blur(20px)",
-            animation: "float 6s ease-in-out infinite"
+            background: `
+              linear-gradient(145deg, rgba(10,15,30,0.98), rgba(5,10,20,0.95)),
+              radial-gradient(circle at 30% 30%, rgba(59,130,246,0.3) 0%, transparent 60%)
+            `,
+            borderRadius: 40,
+            border: "2px solid rgba(59,130,246,0.6)",
+            padding: "64px 48px",
+            boxShadow: `
+              0 60px 180px rgba(10,15,30,0.95),
+              0 0 100px rgba(59,130,246,0.4),
+              inset 0 1px 0 rgba(255,255,255,0.1)
+            `,
+            backdropFilter: "blur(30px) saturate(150%)",
+            animation: "vaultFloat 8s ease-in-out infinite"
           }}>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "28px", marginBottom: "32px" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "32px", marginBottom: "40px" }}>
               <div style={{
                 position: "relative",
-                width: 140,
-                height: 140,
+                width: 160,
+                height: 160,
                 borderRadius: "50%",
                 overflow: "hidden",
-                border: "4px solid rgba(59,130,246,0.8)",
-                boxShadow: "0 0 60px rgba(59,130,246,0.6), inset 0 0 40px rgba(255,255,255,0.1)",
-                flexShrink: 0
+                border: "4px solid rgba(59,130,246,0.9)",
+                boxShadow: `
+                  0 0 80px rgba(59,130,246,0.7),
+                  inset 0 0 60px rgba(255,255,255,0.15)
+                `,
+                flexShrink: 0,
+                background: "linear-gradient(135deg, #1e3a8a, #3b82f6)"
               }}>
                 <Image
                   src="/founder-dayanidhi.png"
-                  alt="Dayanidhi Dondapati - Quantum AI Governor"
+                  alt="Dayanidhi Dondapati - Quantum AI Architect"
                   fill
                   style={{ objectFit: "cover" }}
                 />
+                <div style={{
+                  position: "absolute",
+                  bottom: 8,
+                  right: 8,
+                  width: 20,
+                  height: 20,
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  boxShadow: "0 0 20px #22c55e"
+                }} />
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <h3 style={{
-                  fontSize: "1.6rem",
-                  fontWeight: 800,
+                  fontSize: "1.9rem",
+                  fontWeight: 900,
                   color: "#f8fafc",
-                  marginBottom: "8px",
-                  letterSpacing: "-0.02em"
+                  marginBottom: "12px",
+                  letterSpacing: "-0.03em",
+                  background: "linear-gradient(135deg, #ffffff, #e2e8f0)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
                 }}>
                   DAYANIDHI DONDA PATI
                 </h3>
                 <div style={{
-                  fontSize: "1rem",
+                  fontSize: "1.1rem",
                   color: "#60a5fa",
-                  fontWeight: 600,
-                  marginBottom: "4px",
-                  letterSpacing: "0.05em"
+                  fontWeight: 800,
+                  marginBottom: "8px",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase"
                 }}>
-                  FOUNDER & QUANTUM AI GOVERNOR
+                  FOUNDER & QUANTUM ARCHITECT
                 </div>
-                <div style={{ fontSize: "0.85rem", color: "#94a3b8" }}>
-                  Architect of post‑human enterprise IT
+                <div style={{ 
+                  fontSize: "0.95rem", 
+                  color: "#94a3b8",
+                  lineHeight: 1.6
+                }}>
+                  Commander of enterprise IT warfare across global banking, healthcare, and digital infrastructure. Architect of post‑human quantum delivery systems.
                 </div>
               </div>
             </div>
 
-            <p style={{
-              fontSize: "1.05rem",
-              color: "#cbd5e1",
-              lineHeight: 1.7,
-              marginBottom: "32px"
-            }}>
-              18+ years commanding global IT operations, infrastructure warfare, and cloud conquests across banking, healthcare, and digital empires. Now unleashing quantum AI agents that execute at MNC scale with zero human friction.
-            </p>
+            <div style={{ marginBottom: "40px" }}>
+              <p style={{
+                fontSize: "1.1rem",
+                color: "#cbd5e1",
+                lineHeight: 1.75,
+                marginBottom: "32px"
+              }}>
+                18+ years leading hyperscale infrastructure campaigns, AIOps implementations, and cloud conquests. Now unleashing quantum AI fleets that execute MNC‑scale delivery with military precision and zero human friction.
+              </p>
+            </div>
 
+            {/* ACHIEVEMENT QUANTUM CHIPS */}
             <div style={{
-              display: "flex",
-              flexDirection: "column",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
               gap: "16px",
-              marginBottom: "32px"
+              marginBottom: "40px"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
-                Multi-country data center and cloud estate commander
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
-                AIOps and Kubernetes implementations at enterprise scale
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "0.95rem", color: "#94a3b8" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 12px #22c55e" }} />
-                Creator of the world's first quantum AI delivery organization
-              </div>
+              {[
+                "Multi‑country data center + cloud estate commander",
+                "AIOps/Kubernetes implementations at Fortune 500 scale", 
+                "Creator of world's first quantum AI delivery organization",
+                "Zero‑trust security architecture specialist"
+              ].map((achievement, i) => (
+                <div key={i} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  padding: "16px 20px",
+                  background: "rgba(59,130,246,0.15)",
+                  borderRadius: 12,
+                  border: "1px solid rgba(59,130,246,0.3)",
+                  fontSize: "0.9rem",
+                  color: "#e2e8f0"
+                }}>
+                  <div style={{ 
+                    width: 8, 
+                    height: 8, 
+                    borderRadius: "50%", 
+                    background: "#22c55e",
+                    boxShadow: "0 0 12px #22c55e"
+                  }} />
+                  {achievement}
+                </div>
+              ))}
             </div>
 
             <blockquote style={{
-              fontSize: "0.95rem",
+              fontSize: "1rem",
               color: "#64748b",
               fontStyle: "italic",
-              padding: "24px",
-              background: "rgba(59,130,246,0.1)",
-              borderLeft: "4px solid #3b82f6",
-              borderRadius: "12px"
+              padding: "32px",
+              background: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(16,185,129,0.1))",
+              borderLeft: "5px solid #3b82f6",
+              borderRadius: "16px",
+              position: "relative",
+              lineHeight: 1.7
             }}>
-              "AutonomIQ doesn't hire consultants. We engineer quantum AI systems that run enterprise IT better than any human organization ever could."
+              "AutonomIQ doesn't deploy consultants. We engineer quantum‑secured AI systems that execute enterprise IT better than any human organization in history."
             </blockquote>
           </div>
         </div>
       </section>
 
-      {/* QUANTUM SERVICES - 3D HOVER CARDS */}
-      <section id="services" style={{ padding: "140px 40px", background: "linear-gradient(180deg, #0a0f1e 0%, #020617 100%)" }}>
-        <div style={{ maxWidth: "1600px", margin: "0 auto" }}>
-          <h2 style={{
-            fontSize: "clamp(2.5rem, 5vw, 4rem)",
-            textAlign: "center",
-            marginBottom: "16px",
-            background: "linear-gradient(135deg, #60a5fa, #a5b4fc)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontWeight: 800
-          }}>
-            QUANTUM AI SERVICE MATRIX
-          </h2>
-          <p style={{
-            textAlign: "center",
-            fontSize: "1.2rem",
-            color: "#94a3b8",
-            maxWidth: "900px",
-            margin: "0 auto 80px",
-            lineHeight: 1.6
-          }}>
-            One quantum AI architecture replaces 17 traditional vendors across consulting, operations, engineering, infrastructure, and BPO.
-          </p>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
-            gap: "32px"
-          }}>
-            {[
-              {
-                title: "QUANTUM AI CONSULTING",
-                icon: "🧠",
-                desc: "Enterprise transformation blueprints generated in hours, not quarters",
-                impact: "4x faster roadmaps • 30% lower TCO targets",
-                popupContent: "Generative AI creates regulator-ready architectures across hybrid cloud, legacy modernization, zero-trust security, and quantum-safe crypto. Every recommendation stress-tested against 10-year cost curves and compliance matrices."
-              },
-              {
-                title: "AIOPS WAR ROOM", 
-                icon: "⚙️",
-                desc: "Predictive incident prevention across 100K+ assets",
-                impact: "95% MTTR reduction • 40% fewer outages",
-                popupContent: "Quantum AI agents monitor every metric, predict failures 72hrs ahead, execute auto-remediation across Kubernetes, VMs, and mainframes. Human SREs become strategic conductors, not firefighting crews."
-              },
-              {
-                title: "QUANTUM DEV ENGINE",
-                icon: "💻",
-                desc: "Production-grade code from AI agents at 10x human velocity",
-                impact: "70% faster cycles • Zero tech debt accumulation",
-                popupContent: "Full-stack development including architecture, code generation, testing, security scanning, and production deployment. AI agents collaborate like 500-person dev teams but ship clean architecture every sprint."
-              }
-            ].map((service, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "linear-gradient(145deg, rgba(15,23,42,0.95), rgba(10,15,30,0.9))",
-                  borderRadius: 24,
-                  border: "1px solid rgba(59,130,246,0.3)",
-                  padding: "40px 32px",
-                  cursor: "pointer",
-                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform: hoveredCard === i ? "translateY(-16px) scale(1.02)" : "translateY(0)",
-                  boxShadow: hoveredCard === i 
-                    ? "0 40px 120px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.2)" 
-                    : "0 20px 60px rgba(15,23,42,0.7)"
-                }}
-                onMouseEnter={() => setHoveredCard(i)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => setShowPopup(i)}
-              >
-                <div style={{ fontSize: "2.2rem", marginBottom: "24px" }}>{service.icon}</div>
-                <h3 style={{
-                  fontSize: "1.4rem",
-                  fontWeight: 800,
-                  color: "#f8fafc",
-                  marginBottom: "12px",
-                  letterSpacing: "-0.02em"
-                }}>
-                  {service.title}
-                </h3>
-                <p style={{ color: "#cbd5e1", fontSize: "1.05rem", marginBottom: "20px", lineHeight: 1.6 }}>
-                  {service.desc}
-                </p>
-                <div style={{ color: "#60a5fa", fontSize: "0.95rem", fontWeight: 600 }}>
-                  {service.impact}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* POPUP MODAL */}
-      {showPopup !== null && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background: "rgba(0,0,0,0.8)",
-          zIndex: 2000,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backdropFilter: "blur(10px)"
-        }}
-        onClick={() => setShowPopup(null)}
-        >
-          <div style={{
-            background: "linear-gradient(145deg, rgba(15,23,42,0.98), rgba(10,15,30,0.95))",
-            borderRadius: 24,
-            border: "1px solid rgba(59,130,246,0.4)",
-            padding: "60px",
-            maxWidth: "800px",
-            maxHeight: "80vh",
-            overflowY: "auto",
-            boxShadow: "0 50px 150px rgba(0,0,0,0.8)"
-          }}
-          onClick={(e) => e.stopPropagation()}
-          >
-            <h3 style={{ fontSize: "1.8rem", fontWeight: 800, color: "#f8fafc", marginBottom: "24px" }}>
-              {[
-                "QUANTUM AI CONSULTING", 
-                "AIOPS WAR ROOM", 
-                "QUANTUM DEV ENGINE"
-              ][showPopup]}
-            </h3>
-            <p style={{ color: "#cbd5e1", fontSize: "1.1rem", lineHeight: 1.7, whiteSpace: "pre-line" }}>
-              {[
-                "Generative AI creates regulator-ready architectures across hybrid cloud, legacy modernization, zero-trust security, and quantum-safe crypto. Every recommendation stress-tested against 10-year cost curves and compliance matrices.",
-                "Quantum AI agents monitor every metric, predict failures 72hrs ahead, execute auto-remediation across Kubernetes, VMs, and mainframes. Human SREs become strategic conductors, not firefighting crews.",
-                "Full-stack development including architecture, code generation, testing, security scanning, and production deployment. AI agents collaborate like 500-person dev teams but ship clean architecture every sprint."
-              ][showPopup]}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* FOOTER */}
-      <footer style={{
-        padding: "80px 40px 40px",
-        background: "#0a0f1e",
-        borderTop: "1px solid rgba(59,130,246,0.2)"
-      }}>
-        <div style={{ maxWidth: "1400px", margin: "0 auto", textAlign: "center", color: "#64748b", fontSize: "0.9rem" }}>
-          <div style={{ marginBottom: "24px", fontSize: "1.1rem", color: "#94a3b8" }}>
-            © 2025 AUTONOMIQ SYSTEMS PVT LTD • RASAPUDIPALEM, VISAKHAPATNAM, ANDHRA PRADESH, INDIA
-          </div>
-          <div>Quantum AI‑operated enterprise services • All outputs AI‑generated • Human governance only</div>
-        </div>
-      </footer>
-
+      {/* CSS ANIMATIONS */}
       <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(0.5deg); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
-        }
-        * { scroll-behavior: smooth; }
-      `}</style>
-    </div>
-  );
-}
+        @keyframes quantumPulse {
+          0%, 100% { 
+            box-shadow: 0 0 50px rgba(59,130,246,0.4);
+            transform: scale(1);
+          }
+          50% { 
+            box-shadow: 0 0 70px rgba(59,130,246,0.7);
