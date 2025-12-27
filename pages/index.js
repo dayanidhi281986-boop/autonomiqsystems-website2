@@ -1,199 +1,194 @@
 import Image from "next/image";
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState('home');
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
   const [particles, setParticles] = useState([]);
-  const [hoveredNav, setHoveredNav] = useState('');
   const [scrollY, setScrollY] = useState(0);
-  const [stats, setStats] = useState({ clients: 247, uptime: 99.999, speed: 12.4, breaches: 0 });
+  const router = useRouter();
+  const modalRef = useRef();
 
-  // Parallax scroll handler
+  // Advanced scroll tracking
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      const sections = ['home', 'services', 'leadership', 'features', 'pricing', 'careers', 'about', 'contact'];
+      const current = sections.find(section => {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          return rect.top < 100 && rect.bottom > 100;
+        }
+        return false;
+      });
+      if (current) setActiveSection(current);
+    };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Quantum particle system
+  // Quantum particle system - Enterprise grade
   useEffect(() => {
-    const animateParticles = () => {
-      setParticles(particles => {
-        const updated = particles.map(particle => ({
+    const interval = setInterval(() => {
+      setParticles(p => {
+        const updated = p.map(particle => ({
           ...particle,
-          x: particle.x + particle.vx + (scrollY * 0.001),
-          y: particle.y + particle.vy + (scrollY * 0.0005),
-          opacity: Math.max(0.1, particle.opacity - 0.0005),
-          hue: (particle.hue + 0.2) % 360
-        })).filter(p => p.opacity > 0.1);
+          x: particle.x + particle.vx + (scrollY * 0.0005),
+          y: particle.y + particle.vy + (Math.sin(Date.now() * 0.001 + particle.id) * 0.5),
+          opacity: Math.max(0.05, particle.opacity - 0.0003),
+          hue: (particle.hue + 0.3) % 360,
+          scale: 1 + Math.sin(Date.now() * 0.002 + particle.id) * 0.2
+        })).filter(p => p.opacity > 0.05);
 
-        if (updated.length < 80) {
+        if (updated.length < 120) {
           updated.push({
             id: Date.now() + Math.random(),
             x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            vx: (Math.random() - 0.5) * 0.8,
-            vy: (Math.random() - 0.5) * 0.8,
-            size: Math.random() * 4 + 1,
-            opacity: Math.random() * 0.6 + 0.4,
-            hue: Math.random() * 60 + 180
+            y: Math.random() * window.innerHeight * 2,
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: Math.random() * 0.8 - 0.4,
+            size: Math.random() * 5 + 2,
+            opacity: Math.random() * 0.8 + 0.2,
+            hue: Math.random() * 60 + 220,
+            scale: 1
           });
         }
         return updated;
       });
-    };
-
-    const interval = setInterval(animateParticles, 33);
+    }, 40);
     return () => clearInterval(interval);
   }, [scrollY]);
 
-  // Animate stats counter
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const animateCount = (target) => {
-            let start = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-              start += increment;
-              if (start >= target) {
-                start = target;
-                clearInterval(timer);
-              }
-              setStats({
-                clients: Math.floor(start),
-                uptime: 99.999,
-                speed: 12.4,
-                breaches: 0
-              });
-            }, 20);
-          };
-          animateCount(247);
-        }
-      });
-    });
-
-    const statsEl = document.querySelector('#stats');
-    if (statsEl) observer.observe(statsEl);
-
-    return () => observer.disconnect();
-  }, []);
+  const scrollToSection = (section) => {
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const services = [
-    { icon: "🧬", title: "Quantum AI Core", desc: "Self-evolving neural networks with quantum entanglement simulation", color: "#3b82f6" },
-    { icon: "🔐", title: "Zero-Trust Security", desc: "Post-quantum cryptography & homomorphic encryption", color: "#10b981" },
-    { icon: "⚡", title: "Hyper-Scale Infra", desc: "Distributed orchestration across 50+ cloud regions", color: "#f59e0b" },
-    { icon: "🛡️", title: "ThreatShield AI", desc: "Real-time autonomous threat hunting 99.9999% accuracy", color: "#ef4444" },
-    { icon: "📊", title: "AIOps Command", desc: "Predictive analytics preventing 98% incidents", color: "#8b5cf6" },
-    { icon: "🌐", title: "Global Mesh Network", desc: "Decentralized AI fabric spanning 200+ edge locations", color: "#06b6d4" },
-    { icon: "🚀", title: "Quantum Inference", desc: "1000x faster inference with quantum-inspired algorithms", color: "#ec4899" },
-    { icon: "🧠", title: "Cognitive Automation", desc: "Human-level reasoning with continuous learning", color: "#f97316" }
+    { id: 1, title: "Quantum AI Core Engine", desc: "Self-evolving neural networks with quantum entanglement simulation delivering 1000x inference acceleration", image: "/quantum-core.png" },
+    { id: 2, title: "Zero-Trust Security Fabric", desc: "Post-quantum cryptography, homomorphic encryption, continuous behavioral biometrics", image: "/security-matrix.png" },
+    { id: 3, title: "Hyper-Scale Infrastructure", desc: "Distributed quantum orchestration across 50+ global cloud regions with 0ms failover", image: "/hyper-scale.png" },
+    { id: 4, title: "ThreatShield Autonomous AI", desc: "Real-time threat hunting with 99.9999% zero-day detection accuracy", image: "/threatshield.png" },
+    { id: 5, title: "AIOps Predictive Command", desc: "Prevents 98% of incidents before occurrence through quantum predictive analytics", image: "/aiops.png" },
+    { id: 6, title: "Global Mesh Network", desc: "Decentralized AI fabric spanning 200+ edge locations worldwide", image: "/global-mesh.png" }
   ];
 
-  const pricing = [
-    { name: "Quantum Starter", price: "$49K/yr", users: "50+", features: ["Quantum AI Core", "Zero-Trust Security", "Global CDN", "24/7 Support"], popular: false },
-    { name: "Enterprise Pro", price: "$199K/yr", users: "500+", features: ["All Starter +", "AIOps Command", "ThreatShield AI", "Custom SLA"], popular: true },
-    { name: "Quantum Elite", price: "CUSTOM", users: "∞", features: ["Full Suite", "On-Prem Deployment", "SOC2/ISO27001", "Dedicated Team"], popular: false }
+  const leadership = [
+    { 
+      name: "Dayanidhi S", 
+      title: "Founder & CEO", 
+      desc: "15+ years in enterprise IT leadership, quantum AI pioneer, architect of Fortune 500 transformations",
+      image: "/founder-dayanidhi.png",
+      linkedin: "#"
+    }
+  ];
+
+  const coreValues = [
+    "Quantum Security First",
+    "Enterprise Scale Innovation", 
+    "Zero-Trust Architecture",
+    "Global AI Democratization",
+    "Sustainable Quantum Computing"
   ];
 
   return (
     <div style={{
       background: `
-        radial-gradient(circle at 20% 80%, rgba(120,119,198,0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,119,198,0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(120,219,255,0.1) 0%, transparent 50%),
-        linear-gradient(135deg, #0a0f1e 0%, #020617 50%, #000000 100%)
+        radial-gradient(circle at 15% 85%, rgba(59,130,246,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 25%, rgba(6,182,212,0.12) 0%, transparent 40%),
+        radial-gradient(circle at 35% 45%, rgba(139,92,246,0.1) 0%, transparent 40%),
+        linear-gradient(135deg, #0a0f1e 0%, #020617 35%, #000000 100%)
       `,
       minHeight: "100vh",
       color: "#f8fafc",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif",
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+      lineHeight: 1.6,
       overflowX: "hidden",
       position: "relative"
     }}>
       
-      {/* QUANTUM PARTICLE SYSTEM */}
+      {/* QUANTUM PARTICLE FIELD */}
       {particles.map(p => (
         <div key={p.id} style={{
           position: "fixed",
-          left: p.x,
-          top: p.y,
+          left: `${p.x}px`,
+          top: `${p.y}px`,
           width: p.size,
           height: p.size,
-          background: `hsla(${p.hue}, 70%, 60%, ${p.opacity})`,
+          background: `hsla(${p.hue}, 75%, 65%, ${p.opacity})`,
           borderRadius: "50%",
-          backdropFilter: "blur(2px)",
+          backdropFilter: "blur(1.5px)",
           zIndex: 1,
-          boxShadow: `0 0 ${p.size * 3}px hsla(${p.hue}, 70%, 60%, ${p.opacity * 0.6})`,
-          transform: `translateZ(0)`
+          boxShadow: `0 0 ${p.size * 4}px hsla(${p.hue}, 75%, 65%, ${p.opacity * 0.7})`,
+          transform: `scale(${p.scale}) translateZ(0)`
         }} />
       ))}
 
-      {/* ENHANCED HEADER */}
+      {/* ENTERPRISE HEADER */}
       <header style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
         zIndex: 10000,
-        backdropFilter: "blur(50px) saturate(180%)",
+        backdropFilter: "blur(60px) saturate(200%)",
         background: "rgba(10, 15, 30, 0.98)",
-        borderBottom: "2px solid rgba(59, 130, 246, 0.6)",
-        padding: "24px 60px",
-        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)"
+        borderBottom: "3px solid rgba(59, 130, 246, 0.7)",
+        padding: "24px 80px",
+        boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.1)"
       }}>
         <div style={{ 
-          maxWidth: "1600px", 
+          maxWidth: "1800px", 
           margin: "0 auto", 
           display: "flex", 
           alignItems: "center", 
           justifyContent: "space-between" 
         }}>
-          <a href="#" style={{ 
+          <a href="#home" onClick={(e) => {e.preventDefault(); scrollToSection('home');}} style={{ 
             display: "flex", 
             alignItems: "center", 
-            gap: "24px", 
-            textDecoration: "none",
-            transition: "all 0.3s ease"
+            gap: "28px", 
+            textDecoration: "none"
           }}>
             <div style={{
               position: "relative",
-              width: 80,
-              height: 80,
-              borderRadius: "24px",
+              width: 90,
+              height: 90,
+              borderRadius: "28px",
               background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%)",
               overflow: "hidden",
               boxShadow: `
-                0 0 40px rgba(59, 130, 246, 0.6),
-                0 0 80px rgba(59, 130, 246, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2)
+                0 0 50px rgba(59, 130, 246, 0.8),
+                0 0 100px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3)
               `,
-              border: "2px solid rgba(255, 255, 255, 0.15)"
+              border: "3px solid rgba(255, 255, 255, 0.2)"
             }}>
               <Image 
                 src="/autonomiq-logo.png" 
-                alt="🧬 AUTONOMIQ" 
+                alt="🧬 AUTONOMIQ QUANTUM AI" 
                 fill 
-                style={{ 
-                  objectFit: "contain",
-                  filter: "brightness(1.2) contrast(1.2)"
-                }}
+                style={{ objectFit: "contain", filter: "brightness(1.3) contrast(1.3)" }}
                 priority 
               />
               <div style={{
                 position: "absolute",
-                inset: 2,
-                background: "conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.15) 90deg, transparent 360deg)",
-                borderRadius: "20px",
-                animation: "spin 4s linear infinite"
+                inset: 3,
+                background: "conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.2) 180deg, transparent 360deg)",
+                borderRadius: "22px",
+                animation: "spin 3s linear infinite"
               }} />
             </div>
             <div>
               <div style={{ 
-                fontSize: "1.5rem", 
+                fontSize: "1.6rem", 
                 fontWeight: 900, 
                 background: "linear-gradient(135deg, #f8fafc, #e2e8f0)",
                 WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent"
+                WebkitTextFillColor: "transparent",
+                letterSpacing: "-0.02em"
               }}>
                 AUTONOMIQ
               </div>
@@ -201,245 +196,275 @@ export default function Home() {
                 fontSize: "0.85rem", 
                 color: "#94a3b8", 
                 fontWeight: 600,
-                letterSpacing: "0.05em"
+                letterSpacing: "0.08em"
               }}>
                 🔐 QUANTUM AI SYSTEMS
               </div>
             </div>
           </a>
 
-          <nav style={{ display: "flex", gap: "8px" }}>
-            {['SERVICES', 'QUANTUM AI', 'INDUSTRIES', 'SECURITY', 'PRICING'].map(item => (
+          <nav style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            {[
+              { label: "What We Do", href: "#services" },
+              { label: "What We Think", href: "#features" },
+              { label: "About", href: "#about" },
+              { label: "Leadership", href: "#leadership" },
+              { label: "Careers", href: "#careers" },
+              { label: "Contact", href: "#contact" }
+            ].map(item => (
               <a 
-                key={item}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                key={item.label}
+                href={item.href}
+                onClick={(e) => { e.preventDefault(); scrollToSection(item.href.slice(1)); }}
                 style={{ 
-                  color: hoveredNav === item ? "#3b82f6" : "#cbd5e1", 
+                  color: activeSection === item.href.slice(1) ? "#3b82f6" : "#cbd5e1", 
                   textDecoration: "none", 
-                  padding: "16px 28px",
-                  borderRadius: "16px",
-                  fontWeight: 600,
+                  padding: "18px 32px",
+                  borderRadius: "20px",
+                  fontWeight: 700,
                   fontSize: "0.95rem",
-                  background: hoveredNav === item ? "rgba(59, 130, 246, 0.15)" : "transparent",
-                  border: `1px solid ${hoveredNav === item ? "rgba(59, 130, 246, 0.4)" : "transparent"}`,
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  position: "relative"
+                  background: activeSection === item.href.slice(1) ? "rgba(59, 130, 246, 0.2)" : "transparent",
+                  border: `2px solid ${activeSection === item.href.slice(1) ? "rgba(59, 130, 246, 0.5)" : "rgba(255,255,255,0.1)"}`,
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  position: "relative",
+                  overflow: "hidden"
                 }}
-                onMouseEnter={() => setHoveredNav(item)}
-                onMouseLeave={() => setHoveredNav('')}
               >
-                {item}
+                {item.label}
               </a>
             ))}
-            <div style={{
-              padding: "16px 32px",
-              background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
-              color: "white",
-              borderRadius: "16px",
-              fontWeight: 700,
-              cursor: "pointer",
-              boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
-              transition: "all 0.3s ease"
-            }}>
-              🚀 START TRIAL
+            <div 
+              style={{
+                padding: "18px 36px",
+                background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+                color: "white",
+                borderRadius: "20px",
+                fontWeight: 800,
+                cursor: "pointer",
+                boxShadow: "0 15px 40px rgba(59, 130, 246, 0.5)",
+                transition: "all 0.4s ease",
+                position: "relative"
+              }}
+              onClick={() => scrollToSection('contact')}
+            >
+              🚀 GET STARTED
             </div>
           </nav>
         </div>
       </header>
 
       {/* HERO SECTION */}
-      <section style={{
+      <section id="home" style={{
         minHeight: "100vh",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
-        maxWidth: "1600px",
+        justifyContent: "space-between",
+        maxWidth: "1800px",
         margin: "0 auto",
-        padding: "200px 80px 120px",
-        textAlign: "center",
-        position: "relative"
+        padding: "220px 100px 150px",
+        position: "relative",
+        zIndex: 10
       }}>
-        <div style={{
-          background: "linear-gradient(135deg, rgba(59,130,246,0.2), rgba(6,182,212,0.2))",
-          padding: "24px 40px",
-          borderRadius: "24px",
-          border: "1px solid rgba(59,130,246,0.5)",
-          display: "inline-block",
-          marginBottom: "48px",
-          fontSize: "1rem",
-          fontWeight: 600,
-          color: "#60a5fa",
-          letterSpacing: "0.05em"
-        }}>
-          🧬 QUANTUM AI SYSTEMS | EST. 2025 | 99.999% UPTIME GUARANTEED
-        </div>
-        
-        <h1 style={{
-          fontSize: "clamp(4rem, 10vw, 8rem)",
-          fontWeight: 900,
-          lineHeight: 1.1,
-          marginBottom: "48px",
-          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #3b82f6 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          letterSpacing: "-0.02em"
-        }}>
-          Quantum-Secure AI 
-          <br />
-          <span style={{ color: "#3b82f6", fontSize: "0.9em" }}>Infrastructure</span>
-        </h1>
-
-        <p style={{
-          fontSize: "1.5rem",
-          lineHeight: 1.7,
-          color: "#cbd5e1",
-          marginBottom: "64px",
-          maxWidth: "800px",
-          fontWeight: 300
-        }}>
-          Deploy <strong>unbreakable AI systems</strong> with quantum-grade encryption, zero-trust 
-          architecture, and self-healing infrastructure. Trusted by Fortune 500 enterprises.
-        </p>
-
-        <div style={{ display: "flex", gap: "32px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="#demo" style={{
-            padding: "24px 48px",
-            background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "20px",
-            fontWeight: 800,
-            fontSize: "1.2rem",
-            boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.5)",
-            transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-            position: "relative",
-            overflow: "hidden"
-          }}>
-            🧬 LAUNCH QUANTUM AI
-          </a>
-          <a href="#features" style={{
-            padding: "24px 48px",
-            background: "rgba(255,255,255,0.08)",
-            color: "#f8fafc",
-            textDecoration: "none",
-            borderRadius: "20px",
+        <div style={{ flex: 1, maxWidth: "700px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, rgba(59,130,246,0.25), rgba(6,182,212,0.25))",
+            padding: "24px 40px",
+            borderRadius: "24px",
+            border: "2px solid rgba(59,130,246,0.6)",
+            display: "inline-block",
+            marginBottom: "48px",
+            fontSize: "1rem",
             fontWeight: 700,
-            fontSize: "1.1rem",
-            border: "2px solid rgba(255,255,255,0.2)",
-            backdropFilter: "blur(20px)",
-            transition: "all 0.4s ease"
+            color: "#60a5fa",
+            letterSpacing: "0.08em"
           }}>
-            🔍 EXPLORE CAPABILITIES
-          </a>
+            🧬 QUANTUM AI SYSTEMS | EST. 2025 | 99.9999% UPTIME | GLOBAL ENTERPRISES
+          </div>
+          <h1 style={{
+            fontSize: "clamp(3rem, 7vw, 5.5rem)",
+            fontWeight: 900,
+            lineHeight: 1.15,
+            marginBottom: "40px",
+            background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #3b82f6 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          }}>
+            Quantum-Secure AI Infrastructure
+            <br />
+            <span style={{ color: "#3b82f6" }}>Enterprise Scale</span>
+          </h1>
+          <p style={{
+            fontSize: "1.3rem",
+            lineHeight: 1.7,
+            color: "#cbd5e1",
+            marginBottom: "60px",
+            maxWidth: "650px",
+            fontWeight: 400
+          }}>
+            Deploy unbreakable AI systems with quantum-grade encryption, zero-trust architecture, 
+            and self-healing infrastructure across 50+ global regions. Trusted by Fortune 500 leaders.
+          </p>
+          <div style={{ display: "flex", gap: "32px", flexWrap: "wrap" }}>
+            <a href="#services" onClick={(e) => {e.preventDefault(); scrollToSection('services');}} style={{
+              padding: "24px 52px",
+              background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+              color: "white",
+              textDecoration: "none",
+              borderRadius: "24px",
+              fontWeight: 800,
+              fontSize: "1.1rem",
+              boxShadow: "0 25px 50px -15px rgba(59, 130, 246, 0.6)",
+              transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+            }}>
+              🧬 EXPLORE QUANTUM AI
+            </a>
+            <a href="#leadership" onClick={(e) => {e.preventDefault(); scrollToSection('leadership');}} style={{
+              padding: "24px 52px",
+              background: "rgba(255,255,255,0.12)",
+              color: "#f8fafc",
+              textDecoration: "none",
+              borderRadius: "24px",
+              fontWeight: 700,
+              border: "2px solid rgba(255,255,255,0.25)",
+              backdropFilter: "blur(25px)",
+              fontSize: "1.1rem",
+              transition: "all 0.4s ease"
+            }}>
+              👨‍💼 MEET LEADERSHIP
+            </a>
+          </div>
         </div>
 
-        {/* LIVE STATS */}
-        <div id="stats" style={{ 
-          marginTop: "120px", 
-          display: "flex", 
-          gap: "64px", 
+        <div style={{
+          flex: 1,
+          display: "flex",
           justifyContent: "center",
-          flexWrap: "wrap"
+          alignItems: "center",
+          position: "relative",
+          height: "600px",
+          zIndex: 20
         }}>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#3b82f6" }}>
-              {stats.clients.toLocaleString()}+
-            </div>
-            <div style={{ color: "#94a3b8", fontSize: "1rem", marginTop: "8px" }}>ENTERPRISES</div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#10b981" }}>
-              {stats.uptime}%
-            </div>
-            <div style={{ color: "#94a3b8", fontSize: "1rem", marginTop: "8px" }}>UPTIME</div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#f59e0b" }}>
-              {stats.speed}x
-            </div>
-            <div style={{ color: "#94a3b8", fontSize: "1rem", marginTop: "8px" }}>FASTER</div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "3.5rem", fontWeight: 900, color: "#ef4444" }}>
-              {stats.breaches}
-            </div>
-            <div style={{ color: "#94a3b8", fontSize: "1rem", marginTop: "8px" }}>BREACHES</div>
+          <div style={{
+            position: "relative",
+            width: 550,
+            height: 550,
+            borderRadius: "50%",
+            background: `
+              radial-gradient(circle at 30% 30%, rgba(59,130,246,0.4) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(6,182,212,0.3) 0%, transparent 50%),
+              radial-gradient(circle at 50% 20%, rgba(139,92,246,0.25) 0%, transparent 50%)
+            `,
+            boxShadow: `
+              0 0 120px rgba(59,130,246,0.6),
+              0 0 240px rgba(6,182,212,0.4),
+              inset 0 0 120px rgba(255,255,255,0.15)
+            `,
+            animation: "quantumPulse 4s ease-in-out infinite"
+          }}>
+            <Image 
+              src="/quantum-core.png" 
+              alt="Quantum AI Core" 
+              width={450} 
+              height={450}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                filter: "drop-shadow(0 0 40px rgba(59,130,246,0.9))"
+              }}
+              priority
+            />
           </div>
         </div>
       </section>
 
-      {/* SERVICES GRID */}
+      {/* SERVICES SECTION */}
       <section id="services" style={{
-        padding: "200px 80px",
+        padding: "180px 100px",
         maxWidth: "1800px",
         margin: "0 auto",
         position: "relative"
       }}>
         <div style={{ textAlign: "center", marginBottom: "140px" }}>
           <h2 style={{
-            fontSize: "clamp(3rem, 6vw, 5rem)",
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
             fontWeight: 900,
-            marginBottom: "32px",
+            marginBottom: "28px",
             background: "linear-gradient(135deg, #f8fafc 0%, #3b82f6 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}>
-            Quantum AI Capabilities
+            What We Do - Quantum Capabilities
           </h2>
           <p style={{ 
-            fontSize: "1.4rem", 
+            fontSize: "1.25rem", 
             color: "#94a3b8", 
-            maxWidth: "800px", 
+            maxWidth: "850px", 
             margin: "0 auto",
             lineHeight: 1.7
           }}>
-            End-to-end AI infrastructure with military-grade security and quantum-resistant encryption
+            End-to-end enterprise AI infrastructure with military-grade quantum security and global scalability
           </p>
         </div>
 
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", 
-          gap: "60px" 
+          gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", 
+          gap: "70px" 
         }}>
-          {services.map((service, index) => (
-            <div key={service.title} style={{
-              background: "rgba(255,255,255,0.025)",
-              backdropFilter: "blur(25px) saturate(180%)",
-              borderRadius: "32px",
-              padding: "64px 48px",
-              border: "1px solid rgba(59,130,246,0.15)",
+          {services.map((service) => (
+            <div key={service.id} style={{
+              background: "rgba(255,255,255,0.035)",
+              backdropFilter: "blur(30px) saturate(200%)",
+              borderRadius: "36px",
+              padding: "72px 56px",
+              border: "2px solid rgba(59,130,246,0.2)",
               transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
               position: "relative",
               overflow: "hidden",
-              cursor: "pointer"
-            }}>
+              cursor: "pointer",
+              height: "100%"
+            }}
+            onClick={() => {
+              setModalContent(service.desc);
+              setShowModal(true);
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-12px)";
+              e.currentTarget.style.boxShadow = "0 35px 80px rgba(59,130,246,0.3)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+            >
               <div style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
                 right: 0,
-                height: "4px",
-                background: `linear-gradient(90deg, ${service.color}, transparent)`,
-                opacity: 0.7
+                height: "5px",
+                background: "linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6)",
+                animation: "gradientShift 3s ease-in-out infinite"
               }} />
               
-              <div style={{ 
-                fontSize: "4rem", 
-                marginBottom: "32px",
-                background: service.color,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                filter: "drop-shadow(0 0 20px rgba(59,130,246,0.3))"
-              }}>
-                {service.icon}
-              </div>
+              <Image 
+                src={service.image || "/quantum-core.png"} 
+                alt={service.title}
+                width={120}
+                height={120}
+                style={{
+                  marginBottom: "36px",
+                  filter: "drop-shadow(0 0 25px rgba(59,130,246,0.6))",
+                  borderRadius: "20px"
+                }}
+              />
               
               <h3 style={{ 
-                fontSize: "2.2rem", 
+                fontSize: "1.9rem", 
                 fontWeight: 800, 
-                marginBottom: "20px",
+                marginBottom: "24px",
                 color: "#f8fafc"
               }}>
                 {service.title}
@@ -448,23 +473,175 @@ export default function Home() {
               <p style={{ 
                 color: "#cbd5e1", 
                 lineHeight: "1.8", 
-                fontSize: "1.15rem",
-                marginBottom: "32px"
+                fontSize: "1.1rem",
+                marginBottom: "40px"
               }}>
                 {service.desc}
               </p>
               
               <div style={{
-                padding: "12px 24px",
-                background: "rgba(59,130,246,0.15)",
-                color: service.color,
-                borderRadius: "20px",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                display: "inline-block"
+                padding: "16px 28px",
+                background: "rgba(59,130,246,0.2)",
+                color: "#3b82f6",
+                borderRadius: "24px",
+                fontSize: "0.95rem",
+                fontWeight: 700,
+                display: "inline-block",
+                border: "1px solid rgba(59,130,246,0.4)"
               }}>
-                LEARN MORE →
+                EXPLORE FEATURES →
               </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* LEADERSHIP SECTION */}
+      <section id="leadership" style={{
+        padding: "180px 100px",
+        background: "linear-gradient(180deg, rgba(10,15,30,0.95) 0%, rgba(2,6,23,1) 100%)",
+        maxWidth: "1800px",
+        margin: "0 auto"
+      }}>
+        <div style={{ textAlign: "center", marginBottom: "140px" }}>
+          <h2 style={{
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            fontWeight: 900,
+            background: "linear-gradient(135deg, #f8fafc 0%, #10b981 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          }}>
+            Leadership Team
+          </h2>
+        </div>
+
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))", 
+          gap: "80px",
+          maxWidth: "1400px",
+          margin: "0 auto"
+        }}>
+          {leadership.map((leader, index) => (
+            <div key={index} style={{
+              display: "flex",
+              gap: "60px",
+              alignItems: "center",
+              background: "rgba(255,255,255,0.025)",
+              backdropFilter: "blur(30px)",
+              borderRadius: "40px",
+              padding: "80px",
+              border: "2px solid rgba(255,255,255,0.1)"
+            }}>
+              <div style={{ flex: "0 0 300px" }}>
+                <Image 
+                  src={leader.image} 
+                  alt={leader.name}
+                  width={300}
+                  height={380}
+                  style={{
+                    borderRadius: "28px",
+                    boxShadow: "0 35px 80px rgba(0,0,0,0.6)",
+                    objectFit: "cover"
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{ 
+                  fontSize: "2.8rem", 
+                  fontWeight: 900, 
+                  marginBottom: "20px",
+                  color: "#f8fafc"
+                }}>
+                  {leader.name}
+                </h3>
+                <div style={{
+                  fontSize: "1.3rem",
+                  color: "#10b981",
+                  fontWeight: 700,
+                  marginBottom: "24px",
+                  padding: "12px 24px",
+                  background: "rgba(16,185,129,0.15)",
+                  borderRadius: "20px",
+                  display: "inline-block",
+                  border: "1px solid rgba(16,185,129,0.4)"
+                }}>
+                  {leader.title}
+                </div>
+                <p style={{ 
+                  color: "#cbd5e1", 
+                  lineHeight: "1.8", 
+                  fontSize: "1.15rem",
+                  marginBottom: "32px"
+                }}>
+                  {leader.desc}
+                </p>
+                <a href={leader.linkedin} style={{
+                  padding: "16px 32px",
+                  background: "linear-gradient(135deg, #10b981, #059669)",
+                  color: "white",
+                  textDecoration: "none",
+                  borderRadius: "24px",
+                  fontWeight: 700,
+                  display: "inline-block"
+                }}>
+                  💼 CONNECT ON LINKEDIN
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FEATURES / WHAT WE THINK */}
+      <section id="features" style={{
+        padding: "180px 100px",
+        maxWidth: "1800px",
+        margin: "0 auto"
+      }}>
+        <div style={{ textAlign: "center", marginBottom: "140px" }}>
+          <h2 style={{
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            fontWeight: 900,
+            background: "linear-gradient(135deg, #f8fafc 0%, #ec4899 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          }}>
+            What We Think - Core Values
+          </h2>
+        </div>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", 
+          gap: "40px" 
+        }}>
+          {coreValues.map((value, index) => (
+            <div key={index} style={{
+              background: "rgba(255,255,255,0.03)",
+              backdropFilter: "blur(20px)",
+              borderRadius: "28px",
+              padding: "64px 40px",
+              border: "2px solid rgba(59,130,246,0.2)",
+              textAlign: "center",
+              transition: "all 0.4s ease"
+            }}>
+              <div style={{
+                fontSize: "3.5rem",
+                marginBottom: "32px",
+                background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+              }}>
+                0{index + 1}
+              </div>
+              <h3 style={{
+                fontSize: "1.6rem",
+                fontWeight: 800,
+                marginBottom: "24px",
+                color: "#f8fafc"
+              }}>
+                {value}
+              </h3>
             </div>
           ))}
         </div>
@@ -472,187 +649,118 @@ export default function Home() {
 
       {/* PRICING */}
       <section id="pricing" style={{
-        padding: "200px 80px",
-        background: "linear-gradient(180deg, rgba(10,15,30,0.9) 0%, rgba(2,6,23,1) 100%)",
-        position: "relative",
-        overflow: "hidden"
+        padding: "180px 100px",
+        background: "linear-gradient(180deg, rgba(10,15,30,0.95) 0%, rgba(2,6,23,1) 100%)",
+        maxWidth: "1800px",
+        margin: "0 auto"
       }}>
         <div style={{ textAlign: "center", marginBottom: "140px" }}>
           <h2 style={{
-            fontSize: "clamp(3rem, 6vw, 5rem)",
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
             fontWeight: 900,
-            background: "linear-gradient(135deg, #f8fafc 0%, #10b981 100%)",
+            background: "linear-gradient(135deg, #f8fafc 0%, #f59e0b 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}>
-            Enterprise Quantum Pricing
+            Enterprise Pricing
           </h2>
         </div>
-
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", 
-          gap: "60px", 
-          maxWidth: "1600px",
-          margin: "0 auto"
-        }}>
-          {pricing.map((plan, index) => (
-            <div key={plan.name} style={{
-              background: "rgba(255,255,255,0.03)",
-              backdropFilter: "blur(30px)",
-              borderRadius: "32px",
-              padding: "72px 56px",
-              border: plan.popular ? "3px solid #10b981" : "2px solid rgba(255,255,255,0.1)",
-              position: "relative",
-              transition: "all 0.4s ease",
-              boxShadow: plan.popular ? "0 0 0 4px rgba(16,185,129,0.3)" : "none"
-            }}>
-              {plan.popular && (
-                <div style={{
-                  position: "absolute",
-                  top: -15,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "#10b981",
-                  color: "white",
-                  padding: "12px 32px",
-                  borderRadius: "24px",
-                  fontSize: "0.85rem",
-                  fontWeight: 800,
-                  boxShadow: "0 10px 25px rgba(16,185,129,0.4)"
-                }}>
-                  ⭐ MOST POPULAR
-                </div>
-              )}
-              
-              <h3 style={{ 
-                fontSize: "2.3rem", 
-                fontWeight: 800, 
-                marginBottom: "24px",
-                color: "#f8fafc"
-              }}>
-                {plan.name}
-              </h3>
-              
-              <div style={{ 
-                fontSize: "4.5rem", 
-                fontWeight: 900, 
-                color: plan.popular ? "#10b981" : "#f8fafc",
-                marginBottom: "24px",
-                lineHeight: 1
-              }}>
-                {plan.price}
-              </div>
-              
-              <div style={{ 
-                color: "#94a3b8", 
-                marginBottom: "48px", 
-                fontSize: "1.1rem",
-                fontWeight: 500
-              }}>
-                {plan.users} concurrent users
-              </div>
-              
-              <ul style={{ listStyle: "none", padding: 0, marginBottom: "56px" }}>
-                {plan.features.map((feature, i) => (
-                  <li key={i} style={{ 
-                    padding: "16px 0", 
-                    color: "#cbd5e1", 
-                    display: "flex", 
-                    alignItems: "center", 
-                    gap: "16px",
-                    fontSize: "1rem"
-                  }}>
-                    <div style={{
-                      width: 24,
-                      height: 24,
-                      background: "#10b981",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.2rem",
-                      flexShrink: 0
-                    }}>
-                      ✓
-                    </div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <a href="#contact" style={{
-                width: "100%",
-                padding: "24px",
-                background: plan.popular 
-                  ? "linear-gradient(135deg, #10b981, #059669)" 
-                  : "linear-gradient(135deg, #3b82f6, #06b6d4)",
-                color: "white",
-                textAlign: "center",
-                textDecoration: "none",
-                borderRadius: "20px",
-                fontWeight: 800,
-                fontSize: "1.1rem",
-                display: "block",
-                boxShadow: "0 20px 40px rgba(16,185,129,0.4)"
-              }}>
-                {plan.popular ? "⚡ CHOOSE ELITE PLAN" : "GET STARTED"}
-              </a>
-            </div>
-          ))}
-        </div>
+        {/* Pricing cards here */}
       </section>
 
-      {/* FOOTER */}
-      <footer style={{
-        padding: "100px 80px 60px",
-        background: "rgba(0,0,0,0.9)",
-        borderTop: "2px solid rgba(59,130,246,0.4)",
+      {/* CONTACT SECTION */}
+      <section id="contact" style={{
+        padding: "180px 100px",
+        background: "rgba(0,0,0,0.95)",
         textAlign: "center"
       }}>
-        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-          <div style={{ 
-            fontSize: "1.2rem", 
-            marginBottom: "40px", 
-            opacity: 0.8,
-            fontWeight: 500
+        <h2 style={{
+          fontSize: "clamp(2.5rem, 5vw, 4rem)",
+          fontWeight: 900,
+          background: "linear-gradient(135deg, #f8fafc 0%, #3b82f6 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          marginBottom: "40px"
+        }}>
+          Ready to Transform?
+        </h2>
+        <p style={{ fontSize: "1.3rem", color: "#94a3b8", maxWidth: "700px", margin: "0 auto 60px" }}>
+          Contact us for quantum AI enterprise solutions
+        </p>
+        <button style={{
+          padding: "24px 60px",
+          background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+          color: "white",
+          border: "none",
+          borderRadius: "28px",
+          fontSize: "1.2rem",
+          fontWeight: 800,
+          cursor: "pointer"
+        }}>
+          📧 SCHEDULE CONSULTATION
+        </button>
+      </section>
+
+      {/* MODAL */}
+      {showModal && (
+        <div ref={modalRef} style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.85)",
+          backdropFilter: "blur(20px)",
+          zIndex: 100000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "40px"
+        }}
+        onClick={(e) => {
+          if (e.target === modalRef.current) setShowModal(false);
+        }}>
+          <div style={{
+            background: "rgba(255,255,255,0.05)",
+            backdropFilter: "blur(40px)",
+            borderRadius: "32px",
+            padding: "80px",
+            maxWidth: "900px",
+            maxHeight: "80vh",
+            overflowY: "auto",
+            border: "2px solid rgba(59,130,246,0.4)"
           }}>
-            © 2025 AUTONOMIQ Quantum AI Systems. All rights reserved. 
-            <br />
-            Built with <span style={{ color: "#3b82f6" }}>Quantum Security™</span>
-          </div>
-          <div style={{ 
-            display: "flex", 
-            justifyContent: "center", 
-            gap: "48px", 
-            fontSize: "1rem", 
-            flexWrap: "wrap" 
-          }}>
-            <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>Privacy Policy</a>
-            <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>Security</a>
-            <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>Compliance</a>
-            <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>Careers</a>
-            <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>API Docs</a>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
+              <h3 style={{ fontSize: "2rem", fontWeight: 800, color: "#f8fafc", margin: 0 }}>Feature Details</h3>
+              <button onClick={() => setShowModal(false)} style={{
+                background: "none",
+                border: "none",
+                fontSize: "2rem",
+                color: "#94a3b8",
+                cursor: "pointer"
+              }}>
+                ×
+              </button>
+            </div>
+            <p style={{ fontSize: "1.2rem", color: "#cbd5e1", lineHeight: 1.8 }}>
+              {modalContent}
+            </p>
           </div>
         </div>
-      </footer>
+      )}
 
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        html {
-          scroll-behavior: smooth;
-          scroll-padding-top: 120px;
+        @keyframes quantumPulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.05); opacity: 0.9; }
         }
-        * {
-          box-sizing: border-box;
+        @keyframes gradientShift {
+          0%, 100% { transform: translateX(-100%); }
+          50% { transform: translateX(100%); }
         }
-        body {
-          margin: 0;
-          padding: 0;
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 140px; }
+        * { box-sizing: border-box; }
       `}</style>
     </div>
   );
