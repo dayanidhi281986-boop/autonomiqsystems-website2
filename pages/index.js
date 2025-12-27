@@ -1,7 +1,6 @@
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-blue-900/20 to-black text-white">
-      {/* Navigation - ALL PAGES */}
       <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 py-4 px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <a href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
@@ -11,7 +10,6 @@ export default function Home() {
             <a href="#services" className="hover:text-blue-400 font-medium">Services</a>
             <a href="/pricing" className="hover:text-blue-400 font-medium">Pricing</a>
             <a href="/about" className="hover:text-blue-400 font-medium">About</a>
-            <a href="/security" className="hover:text-blue-400 font-medium">Security</a>
             <a href="/contact" className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-xl font-bold text-sm transition-all duration-300">
               Free Assessment
             </a>
@@ -19,7 +17,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="pt-32 pb-32 px-6 max-w-7xl mx-auto text-center min-h-screen flex flex-col justify-center">
         <div className="inline-flex items-center bg-green-500/20 border-2 border-green-500/50 px-8 py-4 rounded-full mb-12 max-w-max mx-auto shadow-2xl">
           <span className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></span>
@@ -46,7 +43,6 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-5xl mx-auto">
           <div className="text-center p-12 bg-zinc-900/30 backdrop-blur-sm rounded-2xl border border-zinc-700/50 hover:border-blue-500/50 transition-all">
             <div className="text-5xl font-black text-blue-400 mb-4">100%</div>
@@ -71,7 +67,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Overview */}
       <section id="services" className="py-32 px-6 bg-gradient-to-b from-zinc-900/50 to-black">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
@@ -84,7 +79,6 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {/* AI Consulting */}
             <div className="group bg-zinc-900/50 border border-zinc-700/50 p-12 rounded-3xl hover:border-blue-500/70 hover:bg-blue-500/5 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
               <div className="w-20 h-20 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-500/40 transition-all">
                 <span className="text-3xl">🧠</span>
@@ -100,7 +94,6 @@ export default function Home() {
               <a href="/pricing" className="inline-block text-blue-400 hover:text-blue-300 font-bold text-lg underline">View Pricing →</a>
             </div>
 
-            {/* AIOps Operations */}
             <div className="group bg-zinc-900/50 border border-zinc-700/50 p-12 rounded-3xl hover:border-green-500/70 hover:bg-green-500/5 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
               <div className="w-20 h-20 bg-green-500/20 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-green-500/40 transition-all">
                 <span className="text-3xl">⚡</span>
@@ -116,6 +109,41 @@ export default function Home() {
               <a href="/pricing" className="inline-block text-green-400 hover:text-green-300 font-bold text-lg underline">View Pricing →</a>
             </div>
 
-            {/* AI Development */}
             <div className="group bg-zinc-900/50 border border-zinc-700/50 p-12 rounded-3xl hover:border-purple-500/70 hover:bg-purple-500/5 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
-              <div className="w-20 h-20 bg-purple-500/20 rounded-2xl flex
+              <div className="w-20 h-20 bg-purple-500/20 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-purple-500/40 transition-all">
+                <span className="text-3xl">💻</span>
+              </div>
+              <h3 className="text-4xl font-black text-purple-400 mb-6 group-hover:text-purple-300">AI Development</h3>
+              <div className="space-y-4 text-xl text-zinc-300 mb-8">
+                <div>• Custom AI applications</div>
+                <div>• Microservices & APIs</div>
+                <div>• 2-week sprint delivery</div>
+                <div>• Enterprise-grade code</div>
+              </div>
+              <div className="text-2xl font-bold text-green-400 mb-4">₹3L-₹15L/projects</div>
+              <a href="/pricing" className="inline-block text-purple-400 hover:text-purple-300 font-bold text-lg underline">View Pricing →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        background: '#1e40af',
+        color: 'white',
+        padding: '15px 24px',
+        borderRadius: '50px',
+        cursor: 'pointer',
+        zIndex: 999,
+        boxShadow: '0 20px 40px rgba(30,64,175,0.4)',
+        fontWeight: 'bold',
+        fontSize: '15px',
+        border: '2px solid rgba(255,255,255,0.1)'
+      }} onClick={() => window.location.href = '/contact'}>
+        💬 AI Chat → Start Project
+      </div>
+    </div>
+  )
+}
