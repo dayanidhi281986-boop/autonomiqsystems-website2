@@ -2,261 +2,283 @@ export default function Home() {
   return (
     <div style={{
       minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #0a0a23 0%, #1a1a2e 50%, #16213e 100%)', 
-      color: '#e2e8f0', 
-      fontFamily: '"Inter", "SF Pro Display", system-ui, -apple-system, sans-serif',
-      lineHeight: 1.7,
-      overflowX: 'hidden'
+      background: `
+        radial-gradient(circle at 20% 80%, rgba(59,130,246,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(16,185,129,0.25) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(168,85,247,0.2) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0f1e 0%, #020617 50%, #000000 100%)
+      `,
+      color: '#f8fafc', 
+      fontFamily: '"Inter", "SF Pro Display", system-ui, sans-serif',
+      lineHeight: 1.6,
+      overflowX: 'hidden',
+      position: 'relative'
     }}>
       
-      {/* MNC Navigation - Minimal */}
-      <nav style={{
-        position: 'fixed', top: 0, width: '100%', 
-        background: 'rgba(10,10,35,0.98)', backdropFilter: 'blur(24px)', 
-        zIndex: 1000, padding: '1.5rem 0', boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+      {/* MAC-LEVEL HEADER */}
+      <header style={{
+        position: 'fixed', top: 0, width: '100%', zIndex: 1000,
+        backdropFilter: 'blur(30px) saturate(180%)',
+        background: 'rgba(10,15,30,0.95)',
+        borderBottom: '1px solid rgba(59,130,246,0.3)',
+        padding: '16px 0'
       }}>
-        <div style={{maxWidth: '1440px', margin: '0 auto', padding: '0 3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div style={{display: 'flex', alignItems: 'center', gap: '2.5rem'}}>
-            {/* Logo Placeholder */}
+        <div style={{maxWidth: '1400px', margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          {/* QUANTUM LOGO */}
+          <a href="#" style={{display: 'flex', alignItems: 'center', gap: '16px', textDecoration: 'none'}}>
             <div style={{
-              width: '48px', height: '48px', 
-              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', 
-              borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.5rem', fontWeight: 900, color: 'white'
+              width: '56px', height: '56px', borderRadius: '16px',
+              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '1.5rem', fontWeight: 900, color: 'white',
+              boxShadow: '0 0 30px rgba(59,130,246,0.4)'
             }}>AQ</div>
-            <div style={{display: 'flex', gap: '3rem'}}>
-              <a href="#enterprise" style={{color: '#94a3b8', fontWeight: 500, fontSize: '1rem', textDecoration: 'none', letterSpacing: '-0.025em'}}>Enterprise Intelligence</a>
-              <a href="#operations" style={{color: '#94a3b8', fontWeight: 500, fontSize: '1rem', textDecoration: 'none', letterSpacing: '-0.025em'}}>Autonomous Operations</a>
-              <a href="#engineering" style={{color: '#94a3b8', fontWeight: 500, fontSize: '1rem', textDecoration: 'none', letterSpacing: '-0.025em'}}>Engineering</a>
-              <a href="#leadership" style={{color: '#94a3b8', fontWeight: 500, fontSize: '1rem', textDecoration: 'none', letterSpacing: '-0.025em'}}>Leadership</a>
+            <div>
+              <div style={{fontWeight: 700, fontSize: '1rem', color: '#f8fafc', letterSpacing: '-0.025em'}}>AUTONOMIQ SYSTEMS</div>
+              <div style={{fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase'}}>Quantum AI Enterprise</div>
             </div>
-          </div>
-          <a href="#contact" style={{
-            background: 'linear-gradient(135deg, #1e40af, #1e3a8a)', color: 'white', 
-            padding: '1rem 2.5rem', borderRadius: '12px', fontWeight: 600, 
-            fontSize: '0.95rem', textDecoration: 'none', letterSpacing: '-0.025em'
-          }}>Contact</a>
-        </div>
-      </nav>
-
-      {/* Hero - Enterprise Authority */}
-      <section style={{padding: '220px 3rem 140px', maxWidth: '1440px', margin: '0 auto', textAlign: 'center'}}>
-        <h1 style={{
-          fontSize: 'clamp(3.5rem, 8vw, 6.5rem)', fontWeight: 800, 
-          background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-          margin: '0 0 2.5rem 0', lineHeight: 1.1, letterSpacing: '-0.03em'
-        }}>
-          Super Quantum AI Systems
-        </h1>
-        <p style={{
-          fontSize: 'clamp(1.25rem, 3vw, 1.875rem)', maxWidth: '800px', margin: '0 auto 5rem',
-          color: '#94a3b8', lineHeight: 1.6, fontWeight: 400
-        }}>
-          Unified enterprise platform delivering quantum-secure AI intelligence, autonomous operations, and self-healing infrastructure at Fortune 500 scale.
-        </p>
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem'}}>
-          <a href="#contact" style={{
-            background: 'linear-gradient(135deg, #1e40af, #1e3a8a)', color: 'white',
-            padding: '1.5rem 4rem', borderRadius: '16px', fontSize: '1.125rem', 
-            fontWeight: 600, textDecoration: 'none', letterSpacing: '-0.025em',
-            boxShadow: '0 20px 40px rgba(30,64,175,0.3)'
-          }}>
-            Deploy Quantum AI Platform
           </a>
-        </div>
-      </section>
 
-      {/* 1. Enterprise Intelligence */}
-      <section id="enterprise" style={{padding: '140px 3rem', background: 'rgba(15,23,42,0.6)', maxWidth: '1440px', margin: '0 auto'}}>
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          <h2 style={{
-            fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', fontWeight: 800, textAlign: 'center',
-            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent', marginBottom: '6rem', letterSpacing: '-0.02em'
-          }}>
-            Enterprise Intelligence
-          </h2>
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem'}}>
-            <div>
-              <h3 style={{fontSize: '2.25rem', fontWeight: 700, color: '#3b82f6', marginBottom: '2rem', letterSpacing: '-0.025em'}}>
-                AI Strategy & Governance
-              </h3>
-              <ul style={{fontSize: '1.125rem', color: '#cbd5e1', lineHeight: 1.8, listStyle: 'none', padding: 0}}>
-                <li style={{marginBottom: '1.5rem'}}>• Quantum-secure AI governance frameworks (NIST PQC)</li>
-                <li style={{marginBottom: '1.5rem'}}>• Enterprise AI risk assessment & compliance automation</li>
-                <li style={{marginBottom: '1.5rem'}}>• Responsible AI policy deployment across 50+ regions</li>
-                <li>• DPDP Act 2023 / GDPR quantum-compliant audit trails</li>
-              </ul>
-            </div>
-            <div>
-              <h3 style={{fontSize: '2.25rem', fontWeight: 700, color: '#8b5cf6', marginBottom: '2rem', letterSpacing: '-0.025em'}}>
-                Responsible AI Framework
-              </h3>
-              <ul style={{fontSize: '1.125rem', color: '#cbd5e1', lineHeight: 1.8, listStyle: 'none', padding: 0}}>
-                <li style={{marginBottom: '1.5rem'}}>• Bias detection at quantum scale (10M+ inference/sec)</li>
-                <li style={{marginBottom: '1.5rem'}}>• Explainable AI with quantum circuit visualization</li>
-                <li style={{marginBottom: '1.5rem'}}>• Automated ethical AI guardrails deployment</li>
-                <li>• Continuous model fairness monitoring (24/7)</li>
-              </ul>
-            </div>
-          </div>
+          {/* MINIMAL NAV */}
+          <nav style={{display: 'flex', gap: '2rem'}}>
+            <a href="#enterprise" style={{color: '#94a3b8', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none'}}>Enterprise</a>
+            <a href="#operations" style={{color: '#94a3b8', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none'}}>Operations</a>
+            <a href="#engineering" style={{color: '#94a3b8', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none'}}>Engineering</a>
+            <a href="#leadership" style={{color: '#94a3b8', fontWeight: 500, fontSize: '0.95rem', textDecoration: 'none'}}>Leadership</a>
+            <a href="#contact" style={{
+              background: 'linear-gradient(135deg, #1e40af, #1e3a8a)', color: 'white',
+              padding: '12px 28px', borderRadius: '999px', fontWeight: 600, fontSize: '0.9rem',
+              textDecoration: 'none', boxShadow: '0 10px 30px rgba(30,64,175,0.4)'
+            }}>Contact</a>
+          </nav>
         </div>
-      </section>
+      </header>
 
-      {/* 2. Autonomous Operations */}
-      <section id="operations" style={{padding: '140px 3rem', maxWidth: '1440px', margin: '0 auto'}}>
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          <h2 style={{
-            fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', fontWeight: 800, textAlign: 'center',
-            background: 'linear-gradient(135deg, #10b981, #34d399)', WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent', marginBottom: '6rem', letterSpacing: '-0.02em'
-          }}>
-            Autonomous Operations
-          </h2>
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem'}}>
-            <div>
-              <h3 style={{fontSize: '2.25rem', fontWeight: 700, color: '#10b981', marginBottom: '2rem'}}>
-                AIOps
-              </h3>
-              <ul style={{fontSize: '1.125rem', color: '#cbd5e1'}}>
-                <li>• Predictive incident management (99.99% accuracy)</li>
-                <li>• Quantum-accelerated root cause analysis (sub-second)</li>
-                <li>• Self-healing infrastructure (0 human intervention)</li>
-                <li>• Multi-cloud cost optimization (30-50% savings)</li>
-              </ul>
+      {/* HERO - FIXED FONT SIZE */}
+      <section style={{padding: '220px 40px 140px', maxWidth: '1400px', margin: '0 auto'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '80px', alignItems: 'center'}}>
+          
+          {/* LEFT - HERO CONTENT */}
+          <div>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '12px', padding: '12px 24px',
+              background: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.4)',
+              borderRadius: '999px', fontSize: '0.875rem', fontWeight: 600, marginBottom: '32px'
+            }}>
+              <div style={{width: '10px', height: '10px', background: '#22c55e', borderRadius: '50%', boxShadow: '0 0 15px #22c55e'}}></div>
+              <span>🧬 QUANTUM AI SYSTEMS | EST. 2025 | 99.9999% UPTIME</span>
             </div>
-            <div>
-              <h3 style={{fontSize: '2.25rem', fontWeight: 700, color: '#059669', marginBottom: '2rem'}}>
-                Infrastructure Intelligence
-              </h3>
-              <ul style={{fontSize: '1.125rem', color: '#cbd5e1'}}>
-                <li>• Quantum-secure observability (50+ regions)</li>
-                <li>• AI-driven capacity planning (zero overprovisioning)</li>
-                <li>• Automated compliance drift detection</li>
-                <li>• Self-orchestrating Kubernetes (200+ clusters)</li>
-              </ul>
+            <h1 style={{
+              fontSize: 'clamp(3rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1,
+              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              marginBottom: '32px', letterSpacing: '-0.02em'
+            }}>
+              Super Quantum AI Infrastructure
+            </h1>
+            <p style={{fontSize: '1.25rem', color: '#cbd5e1', maxWidth: '600px', marginBottom: '40px', lineHeight: 1.6}}>
+              Post-quantum cryptography + self-evolving neural networks + zero-trust security fabric. 
+              Deploy unbreakable enterprise AI across 200+ global edge locations.
+            </p>
+            <div style={{display: 'flex', gap: '24px', flexWrap: 'wrap'}}>
+              <a href="#contact" style={{
+                padding: '18px 40px', background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white', borderRadius: '999px', fontWeight: 600, fontSize: '1rem',
+                textDecoration: 'none', boxShadow: '0 20px 40px rgba(59,130,246,0.4)'
+              }}>
+                🧬 ACTIVATE QUANTUM AI
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* 3. Engineering Excellence */}
-      <section id="engineering" style={{padding: '140px 3rem', background: 'rgba(15,23,42,0.6)', maxWidth: '1440px', margin: '0 auto'}}>
-        <h2 style={{
-          fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', fontWeight: 800, textAlign: 'center',
-          background: 'linear-gradient(135deg, #ec4899, #f472b6)', WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent', marginBottom: '6rem'
-        }}>
-          Engineering
-        </h2>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '4rem'}}>
-          <div style={{padding: '3rem', background: 'rgba(236,72,153,0.1)', borderRadius: '24px', border: '1px solid rgba(236,72,153,0.2)'}}>
-            <h3 style={{fontSize: '2rem', fontWeight: 700, color: '#ec4899', marginBottom: '1.5rem'}}>Intelligent Software Development</h3>
-            <ul style={{fontSize: '1.125rem', color: '#cbd5e1'}}>
-              <li>Quantum-accelerated CI/CD (1000x faster builds)</li>
-              <li>AI code generation (95% defect-free first pass)</li>
-              <li>Self-documenting microservices (zero tech debt)</li>
-              <li>Quantum-secure supply chain (SBOM + PQC)</li>
-            </ul>
-          </div>
-          <div style={{padding: '3rem', background: 'rgba(168,85,247,0.1)', borderRadius: '24px', border: '1px solid rgba(168,85,247,0.2)'}}>
-            <h3 style={{fontSize: '2rem', fontWeight: 700, color: '#8b5cf6', marginBottom: '1.5rem'}}>Secure Architecture Design</h3>
-            <ul style={{fontSize: '1.125rem', color: '#cbd5e1'}}>
-              <li>Post-quantum cryptography (Kyber/Dilithium)</li>
-              <li>Zero-trust service mesh (Istio + quantum certs)</li>
-              <li>Homomorphic encryption for encrypted analytics</li>
-              <li>Self-healing architecture patterns</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Leadership */}
-      <section id="leadership" style={{padding: '140px 3rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'center'}}>
-        <h2 style={{
-          fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 800,
-          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent', marginBottom: '4rem'
-        }}>
-          Leadership
-        </h2>
-        <div style={{
-          background: 'rgba(15,23,42,0.8)', padding: '5rem 4rem', borderRadius: '32px',
-          border: '1px solid rgba(59,130,246,0.3)', maxWidth: '800px', margin: '0 auto'
-        }}>
-          {/* Founder Photo Placeholder */}
+          {/* RIGHT - FOUNDER */}
           <div style={{
-            width: '200px', height: '200px', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
-            borderRadius: '50%', margin: '0 auto 2.5rem', border: '4px solid rgba(255,255,255,0.2)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem'
-          }}>👨‍💼</div>
-          <h3 style={{fontSize: '3rem', fontWeight: 800, color: '#3b82f6', marginBottom: '1rem'}}>
-            DAYANIDHI DONDAPATI
-          </h3>
-          <p style={{fontSize: '1.5rem', color: '#94a3b8', marginBottom: '2rem'}}>Founder & CEO</p>
-          <p style={{fontSize: '1.25rem', color: '#e2e8f0', lineHeight: 1.7}}>
-            15+ years enterprise IT leadership. Architected India's first quantum-secure AI platform.
-            Built Fortune 500-scale infrastructure serving 50+ global regions with 99.9999% uptime.
-          </p>
+            background: 'rgba(15,23,42,0.95)', padding: '40px', borderRadius: '24px',
+            border: '1px solid rgba(59,130,246,0.3)', boxShadow: '0 40px 120px rgba(15,23,42,0.8)'
+          }}>
+            <div style={{
+              width: '120px', height: '120px', borderRadius: '50%', margin: '0 auto 24px',
+              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', border: '3px solid rgba(255,255,255,0.2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem'
+            }}>
+              👨‍💼
+            </div>
+            <h3 style={{fontSize: '1.75rem', fontWeight: 700, color: '#3b82f6', marginBottom: '12px', textAlign: 'center'}}>
+              DAYANIDHI DONDAPATI
+            </h3>
+            <p style={{fontSize: '0.95rem', color: '#94a3b8', textAlign: 'center', marginBottom: '16px'}}>
+              Founder & CEO
+            </p>
+            <p style={{fontSize: '1rem', color: '#e2e8f0', textAlign: 'center', lineHeight: 1.5}}>
+              15+ years enterprise IT | Quantum AI pioneer | Built India's first quantum-secure platform
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" style={{padding: '140px 3rem 100px', background: 'rgba(15,23,42,0.8)', maxWidth: '1000px', margin: '0 auto'}}>
+      {/* ENTERPRISE INTELLIGENCE - CORE LEVEL */}
+      <section id="enterprise" style={{padding: '140px 40px', background: 'rgba(15,23,42,0.6)', maxWidth: '1400px', margin: '0 auto'}}>
         <h2 style={{
-          fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', fontWeight: 800, textAlign: 'center',
-          background: 'linear-gradient(135deg, #10b981, #34d399)', WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent', marginBottom: '5rem'
+          fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', fontWeight: 700, textAlign: 'center',
+          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent', marginBottom: '80px'
         }}>
-          Deploy Quantum AI Today
+          Enterprise Intelligence
+        </h2>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px'}}>
+          <div>
+            <h3 style={{fontSize: '1.875rem', fontWeight: 700, color: '#3b82f6', marginBottom: '24px'}}>
+              AI Strategy & Governance
+            </h3>
+            <ul style={{fontSize: '1.125rem', color: '#e2e8f0', lineHeight: 1.8}}>
+              <li>• NIST PQC (Kyber-1024/Dilithium-5) certified governance</li>
+              <li>• Quantum-safe AI risk frameworks (500+ compliance checks)</li>
+              <li>• Automated DPDP/GDPR audit trails (zero manual reporting)</li>
+              <li>• Self-auditing AI agents with immutable decision logs</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style={{fontSize: '1.875rem', fontWeight: 700, color: '#8b5cf6', marginBottom: '24px'}}>
+              Responsible AI Framework
+            </h3>
+            <ul style={{fontSize: '1.125rem', color: '#e2e8f0', lineHeight: 1.8}}>
+              <li>• Quantum-scale bias detection (10M+ inferences/sec)</li>
+              <li>• Adversarial robustness testing (99.99% attack resistance)</li>
+              <li>• Explainable quantum circuits for regulatory approval</li>
+              <li>• Continuous fairness monitoring (24/7 model drift detection)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* AUTONOMOUS OPERATIONS */}
+      <section id="operations" style={{padding: '140px 40px', maxWidth: '1400px', margin: '0 auto'}}>
+        <h2 style={{
+          fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', fontWeight: 700, textAlign: 'center',
+          background: 'linear-gradient(135deg, #10b981, #34d399)', WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent', marginBottom: '80px'
+        }}>
+          Autonomous Operations
+        </h2>
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '40px'}}>
+          <div style={{
+            padding: '40px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)',
+            borderRadius: '20px'
+          }}>
+            <h3 style={{fontSize: '1.75rem', fontWeight: 700, color: '#10b981', marginBottom: '20px'}}>
+              AIOps War Room
+            </h3>
+            <ul style={{fontSize: '1.125rem', color: '#e2e8f0'}}>
+              <li>• 72hr failure prediction (99.99% accuracy)</li>
+              <li>• Sub-30s auto-remediation across 100K+ assets</li>
+              <li>• Quantum-accelerated RCA (root cause in 200ms)</li>
+              <li>• Multi-cloud cost optimization (45% savings)</li>
+            </ul>
+          </div>
+          <div style={{
+            padding: '40px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)',
+            borderRadius: '20px'
+          }}>
+            <h3 style={{fontSize: '1.75rem', fontWeight: 700, color: '#059669', marginBottom: '20px'}}>
+              Infrastructure Intelligence
+            </h3>
+            <ul style={{fontSize: '1.125rem', color: '#e2e8f0'}}>
+              <li>• Quantum-secure observability (50+ regions)</li>
+              <li>• Predictive capacity planning (zero overprovisioning)</li>
+              <li>• Automated compliance drift correction</li>
+              <li>• Self-orchestrating K8s (500+ clusters)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ENGINEERING */}
+      <section id="engineering" style={{padding: '140px 40px', background: 'rgba(15,23,42,0.6)', maxWidth: '1400px', margin: '0 auto'}}>
+        <h2 style={{
+          fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', fontWeight: 700, textAlign: 'center',
+          background: 'linear-gradient(135deg, #ec4899, #f472b6)', WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent', marginBottom: '80px'
+        }}>
+          Engineering Excellence
+        </h2>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px'}}>
+          <div>
+            <h3 style={{fontSize: '1.875rem', fontWeight: 700, color: '#ec4899', marginBottom: '24px'}}>
+              Intelligent Software Development
+            </h3>
+            <p style={{fontSize: '1.125rem', color: '#e2e8f0', marginBottom: '24px'}}>
+              Quantum-accelerated CI/CD pipelines with 1000x faster builds and 95% defect-free code generation.
+            </p>
+            <ul style={{fontSize: '1rem', color: '#cbd5e1'}}>
+              <li>• Self-documenting microservices (zero tech debt)</li>
+              <li>• Quantum-secure supply chain (SBOM+PQC)</li>
+              <li>• AI agents = 500-dev team velocity</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style={{fontSize: '1.875rem', fontWeight: 700, color: '#8b5cf6', marginBottom: '24px'}}>
+              Secure Architecture Design
+            </h3>
+            <p style={{fontSize: '1.125rem', color: '#e2e8f0', marginBottom: '24px'}}>
+              Post-quantum cryptography + zero-trust service mesh with homomorphic encryption.
+            </p>
+            <ul style={{fontSize: '1rem', color: '#cbd5e1'}}>
+              <li>• Kyber-1024/Dilithium-5 encryption</li>
+              <li>• Istio + quantum certs service mesh</li>
+              <li>• Encrypted analytics (FHE)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" style={{padding: '140px 40px 100px', background: 'rgba(15,23,42,0.8)', maxWidth: '1000px', margin: '0 auto'}}>
+        <h2 style={{
+          fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', fontWeight: 700, textAlign: 'center',
+          background: 'linear-gradient(135deg, #10b981, #34d399)', WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent', marginBottom: '60px'
+        }}>
+          Deploy Production Platform
         </h2>
         <form action="https://formsubmit.co/contact@autonomiqsystems.com" method="POST" style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', maxWidth: '1000px', margin: '0 auto'
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', maxWidth: '1000px', margin: '0 auto'
         }}>
           <input type="hidden" name="_subject" value="Quantum AI Enterprise Deployment" />
-          <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
-            <input type="text" name="company" placeholder="Organization" style={{
-              padding: '1.5rem 2rem', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
-              borderRadius: '12px', color: 'white', fontSize: '1.125rem', fontWeight: 400
+          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+            <input type="text" name="company" placeholder="Organization *" style={{
+              padding: '20px 24px', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
+              borderRadius: '16px', color: 'white', fontSize: '1.125rem'
             }} required />
-            <input type="text" name="role" placeholder="Role" style={{
-              padding: '1.5rem 2rem', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
-              borderRadius: '12px', color: 'white', fontSize: '1.125rem', fontWeight: 400
-            }} required />
-            <input type="email" name="email" placeholder="Email" style={{
-              padding: '1.5rem 2rem', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
-              borderRadius: '12px', color: 'white', fontSize: '1.125rem', fontWeight: 400
+            <input type="email" name="email" placeholder="Email *" style={{
+              padding: '20px 24px', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
+              borderRadius: '16px', color: 'white', fontSize: '1.125rem'
             }} required />
           </div>
-          <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
-            <textarea name="requirements" rows="5" placeholder="Technical Requirements" style={{
-              padding: '1.5rem 2rem', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
-              borderRadius: '12px', color: 'white', fontSize: '1.125rem', resize: 'vertical'
+          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+            <textarea name="requirements" rows="6" placeholder="Technical Requirements (Cloud infra? AIOps? Quantum security?)" style={{
+              padding: '20px 24px', background: 'rgba(30,41,59,0.8)', border: '1px solid #475569',
+              borderRadius: '16px', color: 'white', fontSize: '1.125rem', resize: 'vertical'
             }} required></textarea>
             <button type="submit" style={{
               background: 'linear-gradient(135deg, #1e40af, #1e3a8a)', color: 'white',
-              padding: '1.75rem 3rem', borderRadius: '16px', fontSize: '1.125rem',
-              fontWeight: 600, border: 'none', cursor: 'pointer', letterSpacing: '-0.025em',
-              boxShadow: '0 20px 40px rgba(30,64,175,0.3)'
+              padding: '24px', borderRadius: '16px', fontSize: '1.125rem', fontWeight: 600,
+              border: 'none', cursor: 'pointer', boxShadow: '0 20px 40px rgba(30,64,175,0.4)'
             }}>
-              Deploy Production Platform
+              🚀 DEPLOY QUANTUM AI ASSESSMENT
             </button>
           </div>
         </form>
       </section>
 
-      {/* Footer */}
-      <footer style={{padding: '4rem 3rem 2rem', background: 'rgba(5,5,25,0.95)', textAlign: 'center', borderTop: '1px solid rgba(59,130,246,0.2)'}}>
+      {/* FOOTER */}
+      <footer style={{
+        padding: '60px 40px 40px', background: 'rgba(5,5,20,0.95)',
+        borderTop: '1px solid rgba(59,130,246,0.2)', textAlign: 'center'
+      }}>
         <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          <p style={{fontSize: '1rem', color: '#64748b', marginBottom: '2rem'}}>
-            © 2025 AutonomIQ Systems Pvt. Ltd. All rights reserved. DPDP Act 2023 compliant.
+          <p style={{fontSize: '1rem', color: '#64748b', marginBottom: '24px'}}>
+            © 2025 AutonomIQ Systems Pvt. Ltd. | DPDP Act 2023 Compliant | GST Registered | Quantum AI Operated
           </p>
-          <div style={{display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
-            <a href="#" style={{color: '#64748b', textDecoration: 'none', fontSize: '0.9rem'}}>Privacy</a>
-            <a href="#" style={{color: '#64748b', textDecoration: 'none', fontSize: '0.9rem'}}>Terms</a>
-            <a href="#" style={{color: '#64748b', textDecoration: 'none', fontSize: '0.9rem'}}>Legal</a>
-          </div>
         </div>
       </footer>
 
