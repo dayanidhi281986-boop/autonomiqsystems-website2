@@ -47,3 +47,5 @@ Send 20 LinkedIn TODAY → 2-3 responses TOMORROW
 
 
 **Status: LinkedIn 0/20 | Email ☐ | Revenue TESTING**
+
+Trigger deploy
