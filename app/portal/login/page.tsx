@@ -1,81 +1,40 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
 
-export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createSupabaseBrowser } from "@/lib/supabase/client";
+
+export default function PortalLoginPage() {
   const router = useRouter();
+  const supabase = createSupabaseBrowser();
 
-  const login = async (e: React.FormEvent) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
+
+  async function signIn(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setError('');
+    setMsg("Signing in...");
 
-    const res = await fetch('/portal/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (res.ok) {
-      router.push('/portal/dashboard');
-    } else {
-      const data = await res.json();
-      setError(data.error);
-    }
-    setLoading(false);
-  };
+    if (error) return setMsg(error.message);
+
+    router.push("/portal/dashboard");
+    router.refresh();
+  }
 
   return (
-    <>
-      <h1 style={{ fontSize: 32 }}>Employee Login</h1>
-      <p>Test: ceo@autonomiqsystems.com / autonomiq123</p>
-      <form onSubmit={login} style={{ maxWidth: 480, marginTop: 24 }}>
-        <input
-          type="email"
-          placeholder="Work Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,.12)",
-            background: "rgba(255,255,255,.04)",
-            color: "#E9EEF7",
-            marginBottom: 12,
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,.12)",
-            background: "rgba(255,255,255,.04)",
-            color: "#E9EEF7",
-            marginBottom: 16,
-          }}
-        />
-        {error && <p style={{ color: '#ff4d4f', marginBottom: 12 }}>{error}</p>}
-        <button 
-          type="submit" 
-          disabled={loading}
-          className="btn btnPrimary"
-          style={{ width: "100%" }}
-        >
-          {loading ? 'Signing in...' : 'Sign In'}
-        </button>
+    <div style={{ maxWidth: 420 }}>
+      <h1>Employee Login</h1>
+      <form onSubmit={signIn}>
+        <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div style={{ height: 10 }} />
+        <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div style={{ height: 10 }} />
+        <button type="submit">Sign in</button>
       </form>
-    </>
+      <div style={{ marginTop: 10 }}>{msg}</div>
+    </div>
   );
 }
