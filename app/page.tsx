@@ -11,9 +11,10 @@ export default function HomePage() {
           </p>
 
           <div className="ctaRow">
-            <a className="btn btnPrimary" href="/services">Explore capabilities</a>
-            <a className="btn" href="/contact">Talk to our strategy team</a>
-          </div>
+  <a className="btn btnPrimary" href="/services">Explore capabilities</a>
+  <a className="btn" href="/contact">Talk to our strategy team</a>
+  <a className="btn" href="/portal">Employee portal</a>
+</div>
         </div>
       </section>
 
