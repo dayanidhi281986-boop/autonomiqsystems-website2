@@ -1,14 +1,12 @@
-import NextAuth from "next-auth";
-import AzureADProvider from "next-auth/providers/azure-ad";
+import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-const handler = NextAuth({
-  providers: [
-    AzureADProvider({
-      clientId: process.env.AZURE_AD_CLIENT_ID!,
-      clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
-      tenantId: process.env.AZURE_AD_TENANT_ID!,
-    }),
-  ],
-});
-
-export { handler as GET, handler as POST };
+export async function POST(request: NextRequest) {
+  const { email, password } = await request.json();
+  if (email.includes('@autonomiqsystems.com') && password === 'autonomiq123') {
+    const response = NextResponse.json({ success: true });
+    cookies().set('auth-token', 'valid', { httpOnly: true });
+    return response;
+  }
+  return NextResponse.json({ error: 'Wrong email/password' }, { status: 401 });
+}
