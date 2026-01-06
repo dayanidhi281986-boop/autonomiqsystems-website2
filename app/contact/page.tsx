@@ -1,3 +1,5 @@
+import React from "react";
+
 export const metadata = {
   title: "Contact | AutonomIQ Systems",
 };
@@ -52,28 +54,10 @@ export default function ContactPage() {
 
             <div className="card">
               <h3>Direct</h3>
-              <p>
-                Website: www.autonomiqsystems.com
-              </p>
+              <p>Website: www.autonomiqsystems.com</p>
               <p style={{ marginTop: 10, color: "var(--muted)" }}>
                 Recommended: create a domain email like <b>contact@autonomiqsystems.com</b> for
                 enterprise credibility.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "12px 12px",
-  borderRadius: 12,
-  border: "1px solid rgba(255,255,255,.12)",
-  background: "rgba(255,255,255,.04)",
-  color: "#E9EEF7",
-  outline: "none",
-};
-
+          </
