@@ -4,7 +4,8 @@ import type { NextRequest } from 'next/server'
 export function middleware(_request: NextRequest) {
   return NextResponse.next()
 }
-  const supabase = createServerClient(
+
+const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
