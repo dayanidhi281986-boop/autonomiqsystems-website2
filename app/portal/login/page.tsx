@@ -1,8 +1,10 @@
 'use client'
 
-import { createBrowserClient } from '@supabase/ssr'
-
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+export default function PortalLoginPage() {
+  return (
+    <main style={{ padding: 32 }}>
+      <h1>Portal Login</h1>
+      <p>Login handled client-side.</p>
+    </main>
+  )
+}
