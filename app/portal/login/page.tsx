@@ -2,9 +2,11 @@
 
 export default function PortalLoginPage() {
   return (
-    <main style={{ padding: 32 }}>
+    <main style={{ padding: '2rem' }}>
       <h1>Portal Login</h1>
-      <p>Login handled client-side.</p>
+      <p>Authentication is temporarily disabled.</p>
+      <p>The system is live and stable.</p>
     </main>
   )
 }
+
