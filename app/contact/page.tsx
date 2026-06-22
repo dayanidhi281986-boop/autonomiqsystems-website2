@@ -114,7 +114,7 @@ export default function ContactPage() {
               <h3>Direct Contact</h3>
               <p>
                 Email:{" "}
-                
+                <a
                   href="mailto:contact@autonomiqsystems.com"
                   style={{ color: "var(--accent)" }}
                 >
